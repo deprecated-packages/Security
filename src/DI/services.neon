@@ -1,0 +1,15 @@
+services:
+	- Symnedi\Security\Core\Authentication\AuthenticationManager
+	- Symfony\Component\Security\Core\Authorization\AuthorizationChecker
+
+	# access decision manager
+	- Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory
+	-
+		class: Symfony\Component\Security\Core\Authorization\AccessDecisionManager
+		factory: [@Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory, create]
+
+	- Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter
+	-
+		class: Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
+		setup:
+			- setToken(@Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter)
