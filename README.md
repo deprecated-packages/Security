@@ -7,11 +7,6 @@
 [![Latest stable](https://img.shields.io/packagist/v/symnedi/security.svg?style=flat-square)](https://packagist.org/packages/symnedi/security)
 
 
-Included features:
-
-- [Voters](http://symfony.com/doc/current/cookbook/security/voters_data_permission.html).
-
-
 ## Install
 
 Via Composer:
@@ -30,10 +25,51 @@ extensions:
 
 ## Usage
 
-**TODO**
+### Voters
 
-That's it!
+First, [read Symfony cookbook](http://symfony.com/doc/current/cookbook/security/voters_data_permission.html)
 
+Then create your voter implementing `Symfony\Component\Security\Core\Authorization\Voter\VoterInterface`
+and register it as service in your `config.neon`:
+
+```yaml
+services:
+	- App\SomeModule\Security\Voter\MyVoter
+```
+
+Then in place, where you need to validate access, just use `AccessDecisionManager`:
+
+
+```php
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
+
+
+class Presenter
+{
+
+	/**
+	 * @var AccessDecisionManager
+	 */
+	private $accessDecisionManager;
+
+	public function __construct(AccessDecisionManager $accessDecisionManager)
+	{
+		$this->accessDecisionManager = $accessDecisionManager;
+	}
+
+
+	/**
+	 * @param PresenterComponentReflection $element
+	 */
+	public function checkRequirements($element)
+	{
+		if ($this->authorizationChecker->isGranted('access', $element) === FALSE) {
+			throw new ForbiddenRequestException;
+		}
+	}
+
+}
+```
 
 
 ## Testing
