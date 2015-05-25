@@ -11,7 +11,9 @@ use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInt
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-
+/**
+ * Factory for @see AccessDecisionManager
+ */
 class AccessDecisionManagerFactory implements AccessDecisionManagerFactoryInterface
 {
 

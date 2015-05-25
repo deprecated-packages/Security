@@ -13,3 +13,4 @@ services:
 		class: Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
 		setup:
 			- setToken(@Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter)
+

@@ -8,14 +8,18 @@
 	],
 	"require": {
 		"php": ">=5.5",
-		"nette/application": "^2.3",
-		"nette/di": "~2.3",
+		"kdyby/events": "^2.4",
+		"nette/di": "^2.3",
 		"nette/security": "^2.3",
 		"symfony/security-core": "^2.6",
-		"mockery/mockery": "^0.9.4"
+		"symfony/security-http": "^2.6"
 	},
 	"require-dev": {
-		"nette/bootstrap": "~2.3"
+		"mockery/mockery": "~0.9",
+		"nette/bootstrap": "~2.3",
+		"nette/robot-loader": "^2.3",
+		"nette/application": "^2.3",
+		"tracy/tracy": "^2.3"
 	},
 	"autoload": {
 		"psr-4": {
@@ -25,6 +29,9 @@
 	"autoload-dev": {
 		"psr-4": {
 			"Symnedi\\Security\\Tests\\": "tests"
-		}
+		},
+		"classmap": [
+			"tests/DI/SecurityExtension/ListenerSource/HomepagePresenter.php"
+		]
 	}
 }

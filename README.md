@@ -19,7 +19,7 @@ Register the extension in `config.neon`:
 
 ```yaml
 extensions:
-	- Symnedi\Security\DI\SecurityExtension
+	symfonySecurity: Symnedi\Security\DI\SecurityExtension
 ```
 
 
@@ -69,6 +69,32 @@ class Presenter
 	}
 
 }
+```
+
+
+### Firewalls
+
+Original [Symfony firewalls](http://symfony.com/doc/current/components/security/firewall.html) pretty simplified.
+
+All you need to create is a matcher and a listener.
+
+
+```yaml
+// config.neon
+services:
+	- AppSomeModule\Security\AdminFirewall\RequestMatcher
+	- AppSomeModule\Security\AdminFirewall\SecurityListener
+```
+
+Then bound them together in configuration.
+
+```yaml
+// config.neon
+symfonySecurity:
+	firewalls:
+		adminFirewall:
+			requestMatcher: @AppSomeModule\Security\AdminFirewall\RequestMatcher
+			securityListener: @AppSomeModule\Security\AdminFirewall\SecurityListener
 ```
 
 

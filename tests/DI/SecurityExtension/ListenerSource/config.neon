@@ -1,0 +1,19 @@
+services:
+	- Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\RequestMatcher
+	- Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\FirewallListener
+#	- Symfony\Component\EventDispatcher\EventDispatcher
+	- Symnedi\Security\Tests\DI\SecurityExtension\ListenerSource\RouterFactory
+	router: [@Symnedi\Security\Tests\DI\SecurityExtension\ListenerSource\RouterFactory, create]
+	- HomepagePresenter
+
+
+extensions:
+	symfonySecurity: Symnedi\Security\DI\SecurityExtension
+	events: Kdyby\Events\DI\EventsExtension
+
+
+symfonySecurity:
+	firewalls:
+		customMatcher:
+			requestMatcher: @Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\RequestMatcher
+			securityListener: @Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\FirewallListener
