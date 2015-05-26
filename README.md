@@ -37,7 +37,7 @@ services:
 	- App\SomeModule\Security\Voter\MyVoter
 ```
 
-Then in place, where you need to validate access, just use `AccessDecisionManager`:
+Then in place, where you need to validate access, just use `AuthorizationChecker`:
 
 
 ```php
