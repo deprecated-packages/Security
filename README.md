@@ -82,8 +82,6 @@ All you need to create is a matcher and a listener.
 First, we create matcher that will match all sitce in admin module  - urls starting `/admin`:
 
 ```php
-// AdminRequestMatcher.php
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
@@ -107,8 +105,6 @@ Then we create listener, that will check user is logged and with 'admin' role.
 Redirect elsewhere.
 
 ```php
-// LoggedAdminFirewallListener.php
-
 use Nette\Application\AbortException;
 use Nette\Application\Application;
 use Nette\Application\Request;
@@ -152,7 +148,6 @@ class LoggedAdminFirewallListener implements ListenerInterface
 Then  we register both services and bind them together.
 
 ```yaml
-// config.neon
 services:
 	- AdminRequestMatcher
 	- LoggedAdminFirewallListener
