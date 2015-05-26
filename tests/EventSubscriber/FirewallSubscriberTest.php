@@ -1,6 +1,6 @@
 <?php
 
-namespace Symnedi\Security\Tests\Http;
+namespace Symnedi\Security\Tests\EventSubscriber;
 
 use Kdyby\Events\EventManager;
 use Mockery;
@@ -12,14 +12,14 @@ use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
 use Symnedi\Security\Contract\Http\ListenerInterface;
-use Symnedi\Security\Http\Firewall;
+use Symnedi\Security\EventSubscriber\FirewallSubscriber;
 
 
-class FirewallTest extends PHPUnit_Framework_TestCase
+class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 {
 
 	/**
-	 * @var Firewall
+	 * @var FirewallSubscriber
 	 */
 	private $firewall;
 
@@ -40,7 +40,7 @@ class FirewallTest extends PHPUnit_Framework_TestCase
 		$symfonyRequestAdapterFactory = Mockery::mock(SymfonyRequestAdapterFactory::class, [
 			'create' => Mockery::mock(SymfonyHttpRequest::class)
 		]);
-		$this->firewall = new Firewall($firewallMapMock, $eventManagerMock, $symfonyRequestAdapterFactory);
+		$this->firewall = new FirewallSubscriber($firewallMapMock, $eventManagerMock, $symfonyRequestAdapterFactory);
 	}
 
 

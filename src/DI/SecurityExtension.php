@@ -15,6 +15,7 @@ use Nette\Utils\Validators;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symnedi\Security\EventSubscriber\FirewallSubscriber;
 use Symnedi\Security\Http\Firewall;
 
 
@@ -112,7 +113,7 @@ class SecurityExtension extends CompilerExtension
 		$containerBuilder->prepareClassList();
 
 		$firewallDefinition = $containerBuilder->getDefinition(
-			$containerBuilder->getByType(Firewall::class)
+			$containerBuilder->getByType(FirewallSubscriber::class)
 		);
 
 		$eventManagerDefinition = $containerBuilder->getDefinition($containerBuilder->getByType(EventManager::class));

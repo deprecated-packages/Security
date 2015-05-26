@@ -9,7 +9,6 @@ namespace Symnedi\Security\Tests\DI;
 
 use Kdyby\Events\EventManager;
 use Nette\Utils\AssertionException;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Http\FirewallMap;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 

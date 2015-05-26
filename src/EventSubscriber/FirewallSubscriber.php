@@ -5,7 +5,7 @@
  * Copyright (c) 2014 Tomas Votruba (http://tomasvotruba.cz)
  */
 
-namespace Symnedi\Security\Http;
+namespace Symnedi\Security\EventSubscriber;
 
 use Kdyby\Events\EventManager;
 use Kdyby\Events\Subscriber;
@@ -20,7 +20,7 @@ use Symnedi\Security\Contract\Http\ListenerInterface;
 /**
  * Mimics @see Symfony\Component\Security\Http\Firewall
  */
-class Firewall implements Subscriber
+class FirewallSubscriber implements Subscriber
 {
 
 	/**
