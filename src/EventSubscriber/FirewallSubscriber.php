@@ -11,7 +11,6 @@ use Kdyby\Events\EventManager;
 use Kdyby\Events\Subscriber;
 use Nette\Application\Application;
 use Nette\Application\Request;
-use Symfony\Component\Security\Http\Firewall as SymfonyFirewall;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
 use Symnedi\Security\Contract\Http\ListenerInterface;

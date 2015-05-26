@@ -1,7 +1,6 @@
 services:
 	- Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\RequestMatcher
 	- Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\FirewallListener
-#	- Symfony\Component\EventDispatcher\EventDispatcher
 	- Symnedi\Security\Tests\DI\SecurityExtension\ListenerSource\RouterFactory
 	router: [@Symnedi\Security\Tests\DI\SecurityExtension\ListenerSource\RouterFactory, create]
 	- HomepagePresenter

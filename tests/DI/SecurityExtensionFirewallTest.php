@@ -9,8 +9,10 @@ namespace Symnedi\Security\Tests\DI;
 
 use Kdyby\Events\EventManager;
 use Nette\Utils\AssertionException;
+use Symfony\Component\HttpFoundation\RequestMatcher;
 use Symfony\Component\Security\Http\FirewallMap;
 use Symfony\Component\Security\Http\FirewallMapInterface;
+use Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\FirewallListener;
 
 
 class SecurityExtensionFirewallTest extends AbstractSecurityExtensionTest
@@ -45,8 +47,8 @@ class SecurityExtensionFirewallTest extends AbstractSecurityExtensionTest
 		$extension->setConfig([
 			'firewalls' => [
 				'customMatcher' => [
-					'requestMatcher' => '@Symnedi\Security\Tests\DI\SecurityExtensionSource\RequestMatcher',
-					'securityListener' => '@Symnedi\Security\Tests\DI\SecurityExtensionSource\FirewallListener'
+					'requestMatcher' => '@' . RequestMatcher::class,
+					'securityListener' => '@' . FirewallListener::class
 				]
 			]
 		]);
