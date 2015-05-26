@@ -7,7 +7,6 @@
 
 namespace Symnedi\Security\Bridge\SymfonyHttpFoundation\Request;
 
-use Nette\Application\Request as ApplicationRequest;
 use Nette\Http\IRequest as NetteRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
@@ -30,19 +29,20 @@ class SymfonyRequestAdapterFactory
 	/**
 	 * @return SymfonyRequest
 	 */
-	public function createFromNette(NetteRequest $netteRequest)
+	public function create()
 	{
-		return new SymfonyRequest($netteRequest->getQuery());
-	}
-
-
-	/**
-	 * @return SymfonyRequest
-	 */
-	public function createFromNetteApplicationRequest(ApplicationRequest $applicationRequest)
-	{
-		// we only need HttpRequest
-		return new SymfonyRequest($this->netteRequest->getQuery());
+		return new SymfonyRequest(
+			$this->netteRequest->getQuery(), // The GET parameters
+			$this->netteRequest->getPost(), // The POST parameters
+			[], // The request attributes (parameters parsed from the PATH_INFO, ...)
+			$this->netteRequest->getCookies(), // The COOKIE parameters
+			$this->netteRequest->getFiles(), // The FILES parameters
+			[
+				'SCRIPT_NAME' => 'scriptName',
+				'SERVER_NAME' => 'server.name'
+			], // The SERVER parameters
+			[] // The raw body data
+		);
 	}
 
 }

@@ -61,7 +61,7 @@ class Firewall implements Subscriber
 
 	public function onRequest(Application $application, Request $applicationRequest)
 	{
-		$symfonyRequest = $this->symfonyRequestAdapterFactory->createFromNetteApplicationRequest($applicationRequest);
+		$symfonyRequest = $this->symfonyRequestAdapterFactory->create();
 
 		/** @var ListenerInterface[] $listeners */
 		list($listeners) = $this->firewallMap->getListeners($symfonyRequest);
