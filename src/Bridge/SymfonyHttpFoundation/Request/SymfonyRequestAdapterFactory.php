@@ -9,6 +9,7 @@ namespace Symnedi\Security\Bridge\SymfonyHttpFoundation\Request;
 
 use Nette\Http\IRequest as NetteRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\ServerBag;
 
 
 class SymfonyRequestAdapterFactory
@@ -36,12 +37,9 @@ class SymfonyRequestAdapterFactory
 			$this->netteRequest->getPost(), // The POST parameters
 			[], // The request attributes (parameters parsed from the PATH_INFO, ...)
 			$this->netteRequest->getCookies(), // The COOKIE parameters
-			$this->netteRequest->getFiles(), // The FILES parameters
-			[
-				'SCRIPT_NAME' => 'scriptName',
-				'SERVER_NAME' => 'server.name'
-			], // The SERVER parameters
-			[] // The raw body data
+			$this->netteRequest->getFiles() // The FILES parameters
+			// The SERVER parameters
+			// The raw body data
 		);
 	}
 

@@ -32,12 +32,12 @@ class SymfonyRequestAdapterFactoryTest extends PHPUnit_Framework_TestCase
 	}
 
 
-	public function testCreateFromNette()
+	public function testCreate()
 	{
 		$symfonyHttpRequest = $this->symfonyRequestAdapterFactory->create();
 		$this->assertInstanceOf(Request::class, $symfonyHttpRequest);
 
-		$this->assertSame('server.name', $symfonyHttpRequest->getHost());
+		$this->assertSame('', $symfonyHttpRequest->getHost());
 		$this->assertSame('', $symfonyHttpRequest->getBaseUrl());
 		$this->assertNull($symfonyHttpRequest->getQueryString());
 	}
