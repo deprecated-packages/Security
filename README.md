@@ -41,20 +41,21 @@ Then in place, where you need to validate access, just use `AccessDecisionManage
 
 
 ```php
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 class Presenter
 {
 
 	/**
-	 * @var AccessDecisionManager
+	 * @var AuthorizationCheckerInterface
 	 */
-	private $accessDecisionManager;
+	private $authorizationChecker;
 
-	public function __construct(AccessDecisionManager $accessDecisionManager)
+	
+	public function __construct(AuthorizationCheckerInterface $authorizationChecker)
 	{
-		$this->accessDecisionManager = $accessDecisionManager;
+		$this->authorizationChecker = $authorizationChecker;
 	}
 
 
