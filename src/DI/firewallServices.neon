@@ -1,0 +1,4 @@
+services:
+	- Symfony\Component\Security\Http\FirewallMap
+	- Symnedi\Security\EventSubscriber\FirewallSubscriber
+	- Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory

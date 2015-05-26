@@ -1,5 +1,6 @@
 services:
 	- Symnedi\Security\Core\Authentication\AuthenticationManager
+	- Symnedi\Security\EventSubscriber\CheckRequirementsSubscriber
 	- Symfony\Component\Security\Core\Authorization\AuthorizationChecker
 
 	# access decision manager

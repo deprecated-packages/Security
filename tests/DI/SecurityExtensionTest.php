@@ -7,17 +7,12 @@
 
 namespace Symnedi\Security\Tests\DI;
 
-use Nette\DI\Compiler;
-use Nette\DI\ContainerBuilder;
-use PHPUnit_Framework_TestCase;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
-use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory;
-use Symnedi\Security\DI\SecurityExtension;
 use Symnedi\Security\Tests\DI\SecurityExtensionSource\SomeVoter;
 
 
-class SecurityExtensionTest extends PHPUnit_Framework_TestCase
+class SecurityExtensionTest extends AbstractSecurityExtensionTest
 {
 
 	public function testLoadConfiguration()
@@ -55,17 +50,6 @@ class SecurityExtensionTest extends PHPUnit_Framework_TestCase
 		$extension->beforeCompile();
 
 		$this->assertCount(1, $accessDecisionManagerFactoryDefinition->getSetup());
-	}
-
-
-	/**
-	 * @return SecurityExtension
-	 */
-	private function getExtension()
-	{
-		$extension = new SecurityExtension;
-		$extension->setCompiler(new Compiler(new ContainerBuilder), 'compiler');
-		return $extension;
 	}
 
 }
