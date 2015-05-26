@@ -7,6 +7,7 @@
 
 namespace Symnedi\Security\DI;
 
+use Kdyby\Events\DI\EventsExtension;
 use Kdyby\Events\EventManager;
 use Nette\DI\CompilerExtension;
 use Nette\DI\MissingServiceException;
@@ -45,7 +46,7 @@ class SecurityExtension extends CompilerExtension
 
 	public function beforeCompile()
 	{
-		$this->loadAccessDecisionManagerFactory();
+		$this->loadAccessDecisionManagerFactoryWithVoters();
 
 		$config = $this->getConfig($this->defaults);
 		if (count($config['firewalls'])) {
@@ -55,7 +56,7 @@ class SecurityExtension extends CompilerExtension
 	}
 
 
-	private function loadAccessDecisionManagerFactory()
+	private function loadAccessDecisionManagerFactoryWithVoters()
 	{
 		$containerBuilder = $this->getContainerBuilder();
 		$containerBuilder->prepareClassList();
@@ -119,12 +120,6 @@ class SecurityExtension extends CompilerExtension
 	}
 
 
-	private function validateKdybyEventsExtensionPresence()
-	{
-		// @todo, replace EventDispatcherInterface
-	}
-
-
 	private function validateEventDispatcherPresence()
 	{
 		$containerBuilder = $this->getContainerBuilder();
@@ -132,7 +127,11 @@ class SecurityExtension extends CompilerExtension
 
 		if ( ! $containerBuilder->findByType(EventManager::class)) {
 			throw new MissingServiceException(
-				sprintf('Instance of "%s" required by firewalls is missing".', EventManager::class)
+				sprintf(
+					'Instance of "%s" required by firewalls is missing. You need to register %s extension".',
+					EventManager::class,
+					EventsExtension::class
+				)
 			);
 		}
 	}
