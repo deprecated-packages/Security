@@ -9,7 +9,7 @@ use Nette\Security\User;
 use Symnedi\Security\Contract\Http\FirewallListenerInterface;
 
 
-class FirewallFirewallListener implements FirewallListenerInterface
+class FirewallListener implements FirewallListenerInterface
 {
 
 	/**
