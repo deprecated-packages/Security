@@ -13,7 +13,7 @@ use Nette\Application\Application;
 use Nette\Application\Request;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
-use Symnedi\Security\Contract\Http\ListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallListenerInterface;
 
 
 /**
@@ -62,7 +62,7 @@ class FirewallSubscriber implements Subscriber
 	{
 		$symfonyRequest = $this->symfonyRequestAdapterFactory->create();
 
-		/** @var ListenerInterface[] $listeners */
+		/** @var FirewallListenerInterface[] $listeners */
 		list($listeners) = $this->firewallMap->getListeners($symfonyRequest);
 
 		foreach ($listeners as $listener) {

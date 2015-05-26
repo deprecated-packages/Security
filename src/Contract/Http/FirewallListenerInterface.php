@@ -14,7 +14,7 @@ use Nette\Application\Request;
 /**
  * Mimics @see \Symfony\Component\Security\Http\Firewall\ListenerInterface
  */
-interface ListenerInterface
+interface FirewallListenerInterface
 {
 
 	function handle(Application $application, Request $applicationRequest);

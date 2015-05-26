@@ -12,7 +12,7 @@ use Nette\Utils\AssertionException;
 use Symfony\Component\HttpFoundation\RequestMatcher;
 use Symfony\Component\Security\Http\FirewallMap;
 use Symfony\Component\Security\Http\FirewallMapInterface;
-use Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\FirewallListener;
+use Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\FirewallFirewallListener;
 
 
 class SecurityExtensionFirewallTest extends AbstractSecurityExtensionTest
@@ -48,7 +48,7 @@ class SecurityExtensionFirewallTest extends AbstractSecurityExtensionTest
 			'firewalls' => [
 				'customMatcher' => [
 					'requestMatcher' => '@' . RequestMatcher::class,
-					'securityListener' => '@' . FirewallListener::class
+					'securityListener' => '@' . FirewallFirewallListener::class
 				]
 			]
 		]);

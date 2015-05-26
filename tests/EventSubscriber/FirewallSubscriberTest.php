@@ -11,7 +11,7 @@ use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
-use Symnedi\Security\Contract\Http\ListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallListenerInterface;
 use Symnedi\Security\EventSubscriber\FirewallSubscriber;
 
 
@@ -26,7 +26,7 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$listener = Mockery::mock(ListenerInterface::class, [
+		$listener = Mockery::mock(FirewallListenerInterface::class, [
 			'handle' => function () {
 				throw new ForbiddenRequestException;
 			}

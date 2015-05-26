@@ -5,7 +5,7 @@ namespace Symnedi\Security\Tests\DI\SecurityExtension;
 use Nette\DI\MissingServiceException;
 use Symfony\Component\HttpFoundation\RequestMatcher;
 use Symnedi\Security\Tests\DI\AbstractSecurityExtensionTest;
-use Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\FirewallListener;
+use Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\FirewallFirewallListener;
 
 
 class MissingEventDispatcherTest extends AbstractSecurityExtensionTest
@@ -18,7 +18,7 @@ class MissingEventDispatcherTest extends AbstractSecurityExtensionTest
 			'firewalls' => [
 				'customMatcher' => [
 					'requestMatcher' => '@' . RequestMatcher::class,
-					'securityListener' => '@' . FirewallListener::class
+					'securityListener' => '@' . FirewallFirewallListener::class
 				]
 			]
 		]);

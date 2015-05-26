@@ -79,23 +79,89 @@ Original [Symfony firewalls](http://symfony.com/doc/current/components/security/
 
 All you need to create is a matcher and a listener.
 
+First, we create matcher that will match all sitce in admin module  - urls starting `/admin`:
+
+```php
+// AdminRequestMatcher.php
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+
+
+class AdminRequestMatcher implements RequestMatcherInterface
+{
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function matches(Request $request)
+	{
+		$url = $request->getPathInfo();
+		return strpos($url, '/admin') === 0;
+	}
+
+}
+```
+
+Then we create listener, that will check user is logged and with 'admin' role.
+Redirect elsewhere.
+
+```php
+// LoggedAdminFirewallListener.php
+
+use Nette\Application\AbortException;
+use Nette\Application\Application;
+use Nette\Application\Request;
+use Nette\Security\User;
+use Symnedi\Security\Contract\Http\ListenerInterface;
+
+
+class LoggedAdminFirewallListener implements ListenerInterface
+{
+
+	/**
+     * @var User
+     */
+    private $user;
+    
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+    	
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function handle(Application $application, Request $applicationRequest)
+	{
+		if ( ! $this->user->isLoggedIn()) {
+			throw new AbortException;
+		}
+
+		if ( ! $this->user->isInRole('admin')) {
+            throw new AbortException;
+        }
+	}
+
+}
+```
+
+
+Then  we register both services and bind them together.
 
 ```yaml
 // config.neon
 services:
-	- AppSomeModule\Security\AdminFirewall\RequestMatcher
-	- AppSomeModule\Security\AdminFirewall\SecurityListener
-```
+	- AdminRequestMatcher
+	- LoggedAdminFirewallListener
 
-Then bound them together in configuration.
-
-```yaml
-// config.neon
 symfonySecurity:
 	firewalls:
-		adminFirewall:
-			requestMatcher: @AppSomeModule\Security\AdminFirewall\RequestMatcher
-			securityListener: @AppSomeModule\Security\AdminFirewall\SecurityListener
+		adminFirewall: # firewall custom name
+			requestMatcher: @AdminRequestMatcher
+			securityListener: @LoggedAdminFirewallListener
 ```
 
 
