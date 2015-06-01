@@ -75,20 +75,29 @@ class Presenter
 
 ### Firewalls
 
-Original [Symfony firewalls](http://symfony.com/doc/current/components/security/firewall.html) pretty simplified.
+Original [Symfony firewalls](http://symfony.com/doc/current/components/security/firewall.html) pretty simplified and with modular support by default.
 
 All you need to create is a matcher and a listener.
 
-First, we create matcher that will match all sitce in admin module  - urls starting `/admin`:
+First, we create matcher that will match all sites in admin module - urls starting with `/admin`:
 
 ```php
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
 
 class AdminRequestMatcher implements RequestMatcherInterface
 {
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getFirewallName()
+	{
+		return 'adminSecurity';
+	}
+	
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -102,31 +111,40 @@ class AdminRequestMatcher implements RequestMatcherInterface
 ```
 
 Then we create listener, that will check user is logged and with 'admin' role.
-Redirect elsewhere.
+Otherwise redirect.
 
 ```php
 use Nette\Application\AbortException;
 use Nette\Application\Application;
 use Nette\Application\Request;
 use Nette\Security\User;
-use Symnedi\Security\Contract\Http\ListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallListenerInterface;
 
 
-class LoggedAdminFirewallListener implements ListenerInterface
+class LoggedAdminFirewallListener implements FirewallListenerInterface
 {
 
 	/**
-     * @var User
-     */
-    private $user;
-    
+	 * @var User
+	 */
+	private $user;
+	
 
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
-    	
+	public function __construct(User $user)
+	{
+		$this->user = $user;
+	}
+	
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getFirewallName()
+	{
+		return 'adminSecurity';
+	}
 
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -137,26 +155,20 @@ class LoggedAdminFirewallListener implements ListenerInterface
 		}
 
 		if ( ! $this->user->isInRole('admin')) {
-            throw new AbortException;
-        }
+			throw new AbortException;
+		}
 	}
 
 }
 ```
 
 
-Then  we register both services and bind them together.
+Then we register both services.
 
 ```yaml
 services:
 	- AdminRequestMatcher
 	- LoggedAdminFirewallListener
-
-symfonySecurity:
-	firewalls:
-		adminFirewall: # firewall custom name
-			requestMatcher: @AdminRequestMatcher
-			securityListener: @LoggedAdminFirewallListener
 ```
 
 

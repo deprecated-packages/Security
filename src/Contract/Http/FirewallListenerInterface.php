@@ -9,12 +9,13 @@ namespace Symnedi\Security\Contract\Http;
 
 use Nette\Application\Application;
 use Nette\Application\Request;
+use Symnedi\Security\Contract\DI\ModularFirewallInterface;
 
 
 /**
  * Mimics @see \Symfony\Component\Security\Http\Firewall\ListenerInterface
  */
-interface FirewallListenerInterface
+interface FirewallListenerInterface extends ModularFirewallInterface
 {
 
 	function handle(Application $application, Request $applicationRequest);

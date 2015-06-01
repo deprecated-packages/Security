@@ -5,10 +5,10 @@ namespace Symnedi\Security\Tests\DI\SecurityExtension;
 use Nette\Application\AbortException;
 use Nette\Application\Application;
 use Symnedi\Security\Tests\ContainerFactory;
-use Symnedi\Security\Tests\DI\AbstractSecurityExtensionTest;
+use Symnedi\Security\Tests\DI\AbstractSecurityExtensionTestCase;
 
 
-class ListenerTest extends AbstractSecurityExtensionTest
+class ListenerTest extends AbstractSecurityExtensionTestCase
 {
 
 	public function testDispatch()

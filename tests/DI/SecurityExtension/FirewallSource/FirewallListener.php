@@ -1,6 +1,6 @@
 <?php
 
-namespace Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource;
+namespace Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource;
 
 use Nette\Application\AbortException;
 use Nette\Application\Application;
@@ -21,6 +21,15 @@ class FirewallListener implements FirewallListenerInterface
 	public function __construct(User $user)
 	{
 		$this->user = $user;
+	}
+
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getFirewallName()
+	{
+		return 'adminFirewall';
 	}
 
 

@@ -3,29 +3,17 @@
 namespace Symnedi\Security\Tests\DI\SecurityExtension;
 
 use Nette\DI\MissingServiceException;
-use Symfony\Component\HttpFoundation\RequestMatcher;
-use Symnedi\Security\Tests\DI\AbstractSecurityExtensionTest;
-use Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource\FirewallFirewallListener;
+use PHPUnit_Framework_TestCase;
+use Symnedi\Security\Tests\ContainerFactory;
 
 
-class MissingEventDispatcherTest extends AbstractSecurityExtensionTest
+class MissingEventDispatcherTest extends PHPUnit_Framework_TestCase
 {
 
-	public function testRegisterProperFirewall()
+	public function testCreate()
 	{
-		$extension = $this->getExtension();
-		$extension->setConfig([
-			'firewalls' => [
-				'customMatcher' => [
-					'requestMatcher' => '@' . RequestMatcher::class,
-					'securityListener' => '@' . FirewallFirewallListener::class
-				]
-			]
-		]);
-
-		$extension->loadConfiguration();
 		$this->setExpectedException(MissingServiceException::class);
-		$extension->beforeCompile();
+		(new ContainerFactory)->createWithConfig(__DIR__ . '/MissingEventDispatcherTest/config.neon');
 	}
 
 }

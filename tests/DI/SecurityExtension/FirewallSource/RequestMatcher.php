@@ -1,13 +1,22 @@
 <?php
 
-namespace Symnedi\Security\Tests\DI\SecurityExtensionFirewallSource;
+namespace Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
 
 class RequestMatcher implements RequestMatcherInterface
 {
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getFirewallName()
+	{
+		return 'adminFirewall';
+	}
+
 
 	/**
 	 * {@inheritdoc}
