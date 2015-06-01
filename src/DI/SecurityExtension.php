@@ -11,113 +11,49 @@ use Kdyby\Events\DI\EventsExtension;
 use Kdyby\Events\EventManager;
 use Nette\DI\CompilerExtension;
 use Nette\DI\MissingServiceException;
-use Nette\Utils\Validators;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symnedi\Security\Contract\Http\FirewallListenerInterface;
+use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 use Symnedi\Security\EventSubscriber\FirewallSubscriber;
-use Symnedi\Security\Http\Firewall;
 
 
 class SecurityExtension extends CompilerExtension
 {
-
-	/**
-	 * @var array[]
-	 */
-	private $defaults = [
-		'firewalls' => []
-	];
-
 
 	public function loadConfiguration()
 	{
 		$containerBuilder = $this->getContainerBuilder();
 		$services = $this->loadFromFile(__DIR__ . '/services.neon');
 		$this->compiler->parseServices($containerBuilder, $services);
-
-		$config = $this->getConfig($this->defaults);
-		$this->validateConfigTypes($config);
-
-		if (count($config['firewalls'])) {
-			$this->loadFirewalls($config['firewalls']);
-		}
 	}
 
 
 	public function beforeCompile()
 	{
-		$this->loadAccessDecisionManagerFactoryWithVoters();
+		$containerBuilder = $this->getContainerBuilder();
+		$containerBuilder->prepareClassList();
 
-		$config = $this->getConfig($this->defaults);
-		if (count($config['firewalls'])) {
-			$this->validateEventDispatcherPresence();
-			$this->addFirewallToEventDispatcher();
-		}
+		$this->loadAccessDecisionManagerFactoryWithVoters();
+		$this->loadFirewallMap();
 	}
 
 
 	private function loadAccessDecisionManagerFactoryWithVoters()
 	{
-		$containerBuilder = $this->getContainerBuilder();
-		$containerBuilder->prepareClassList();
-
-		$accessDecisionManagerFactoryDefinition = $containerBuilder->getDefinition(
-			$containerBuilder->getByType(AccessDecisionManagerFactoryInterface::class)
-		);
-
-		foreach ($containerBuilder->findByType(VoterInterface::class) as $voterDefinition) {
-			$accessDecisionManagerFactoryDefinition->addSetup('addVoter', ['@' . $voterDefinition->getClass()]);
-		}
+		$this->loadMediator(AccessDecisionManagerFactoryInterface::class, VoterInterface::class, 'addVoter');
 	}
 
 
-	private function validateConfigTypes(array $config)
+	private function loadFirewallMap()
 	{
-		if (count($config['firewalls'])) {
-			Validators::assert($config['firewalls'], 'array');
+		$this->validateEventDispatcherPresence();
 
-			foreach ($config['firewalls'] as $name => $firewall) {
-				Validators::assert($name, 'string');
-				Validators::assertField($firewall, 'requestMatcher', 'string');
-				Validators::assertField($firewall, 'securityListener', 'string');
-			}
-		}
-	}
+		$this->loadMediator(EventManager::class, FirewallSubscriber::class, 'addEventSubscriber');
 
-
-	private function loadFirewalls(array $firewalls)
-	{
-		$containerBuilder = $this->getContainerBuilder();
-
-		$services = $this->loadFromFile(__DIR__ . '/firewallServices.neon');
-		$this->compiler->parseServices($containerBuilder, $services);
-
-		$containerBuilder->prepareClassList();
-		$firewallMapDefinition = $containerBuilder->getDefinition(
-			$containerBuilder->getByType(FirewallMapInterface::class)
-		);
-
-		foreach ($firewalls as $name => $firewall) {
-			$firewallMapDefinition->addSetup('add', [
-				$firewall['requestMatcher'],
-				[$firewall['securityListener']]
-			]);
-		}
-	}
-
-
-	private function addFirewallToEventDispatcher()
-	{
-		$containerBuilder = $this->getContainerBuilder();
-		$containerBuilder->prepareClassList();
-
-		$firewallDefinition = $containerBuilder->getDefinition(
-			$containerBuilder->getByType(FirewallSubscriber::class)
-		);
-
-		$eventManagerDefinition = $containerBuilder->getDefinition($containerBuilder->getByType(EventManager::class));
-		$eventManagerDefinition->addSetup('addEventSubscriber', ['@' . $firewallDefinition->getClass()]);
+		$this->loadMediator(FirewallMapInterface::class, FirewallListenerInterface::class, 'addFirewallListener');
+		$this->loadMediator(FirewallMapInterface::class, RequestMatcherInterface::class, 'addRequestMatcher');
 	}
 
 
@@ -129,11 +65,27 @@ class SecurityExtension extends CompilerExtension
 		if ( ! $containerBuilder->findByType(EventManager::class)) {
 			throw new MissingServiceException(
 				sprintf(
-					'Instance of "%s" required by firewalls is missing. You need to register %s extension".',
+					'Instance of "%s" required by firewalls is missing. You might need to register %s extension".',
 					EventManager::class,
 					EventsExtension::class
 				)
 			);
+		}
+	}
+
+
+	/**
+	 * @param string $mediatorClass
+	 * @param string $colleagueClass
+	 * @param string $adderMethod
+	 */
+	private function loadMediator($mediatorClass, $colleagueClass, $adderMethod)
+	{
+		$containerBuilder = $this->getContainerBuilder();
+
+		$mediator = $containerBuilder->getDefinition($containerBuilder->getByType($mediatorClass));
+		foreach ($containerBuilder->findByType($colleagueClass) as $colleague) {
+			$mediator->addSetup($adderMethod, ['@' . $colleague->getClass()]);
 		}
 	}
 

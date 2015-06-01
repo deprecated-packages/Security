@@ -14,3 +14,12 @@ services:
 		class: Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
 		setup:
 			- setToken(@Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter)
+
+	# firewall
+	- Symnedi\Security\Http\FirewallMapFactory
+	-
+		class: Symfony\Component\Security\Http\FirewallMap
+		factory: [@Symnedi\Security\Http\FirewallMapFactory, create]
+
+	- Symnedi\Security\EventSubscriber\FirewallSubscriber
+	- Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory
