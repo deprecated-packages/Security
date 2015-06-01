@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symnedi\Security\Contract\Http\FirewallListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 use Symnedi\Security\EventSubscriber\FirewallSubscriber;
 
@@ -36,7 +37,10 @@ class SecurityExtension extends CompilerExtension
 		$containerBuilder->prepareClassList();
 
 		$this->loadAccessDecisionManagerFactoryWithVoters();
-		$this->loadFirewallMap();
+
+		if ($containerBuilder->findByType(FirewallListenerInterface::class)) {
+			$this->loadFirewallMap();
+		}
 	}
 
 
@@ -52,8 +56,8 @@ class SecurityExtension extends CompilerExtension
 
 		$this->loadMediator(EventManager::class, FirewallSubscriber::class, 'addEventSubscriber');
 
-		$this->loadMediator(FirewallMapInterface::class, FirewallListenerInterface::class, 'addFirewallListener');
-		$this->loadMediator(FirewallMapInterface::class, RequestMatcherInterface::class, 'addRequestMatcher');
+		$this->loadMediator(FirewallMapFactoryInterface::class, FirewallListenerInterface::class, 'addFirewallListener');
+		$this->loadMediator(FirewallMapFactoryInterface::class, RequestMatcherInterface::class, 'addRequestMatcher');
 	}
 
 

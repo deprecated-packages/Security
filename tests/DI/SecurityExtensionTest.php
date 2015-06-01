@@ -12,7 +12,7 @@ use Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory;
 use Symnedi\Security\Tests\DI\SecurityExtensionSource\SomeVoter;
 
 
-class SecurityExtensionTest extends AbstractSecurityExtensionTest
+class SecurityExtensionTestCase extends AbstractSecurityExtensionTestCase
 {
 
 	public function testLoadConfiguration()

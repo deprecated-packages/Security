@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symnedi\Security\DI\SecurityExtension;
 
 
-abstract class AbstractSecurityExtensionTest extends PHPUnit_Framework_TestCase
+abstract class AbstractSecurityExtensionTestCase extends PHPUnit_Framework_TestCase
 {
 
 	/**
