@@ -8,7 +8,7 @@ use Symnedi\Security\Tests\ContainerFactory;
 use Symnedi\Security\Tests\DI\AbstractSecurityExtensionTestCase;
 
 
-class ListenerTestCase extends AbstractSecurityExtensionTestCase
+class ListenerTest extends AbstractSecurityExtensionTestCase
 {
 
 	public function testDispatch()

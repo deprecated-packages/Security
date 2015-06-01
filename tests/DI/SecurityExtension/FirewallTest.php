@@ -12,7 +12,7 @@ use Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource\FirewallListener;
 use Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource\RequestMatcher;
 
 
-class FirewallTestCase extends AbstractSecurityExtensionTestCase
+class FirewallTest extends AbstractSecurityExtensionTestCase
 {
 
 	public function testRegisterProperFirewall()

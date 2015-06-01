@@ -14,31 +14,32 @@ use Symnedi\Security\Http\FirewallMapFactory;
 class FirewallMapFactoryTest extends PHPUnit_Framework_TestCase
 {
 
-	/**
-	 * @var FirewallMapFactoryInterface
-	 */
-	private $firewallMapFactory;
-
-
-	protected function setUp()
+	public function testCreate()
 	{
-		$this->firewallMapFactory = new FirewallMapFactory;
+		$firewallMapFactory = $this->createLoadedFirewallMapFactory();
+		$firewallMap = $firewallMapFactory->create();
+		$this->assertInstanceOf(FirewallMapInterface::class, $firewallMap);
 	}
 
 
-	public function testCreate()
+	/**
+	 * @return FirewallMapFactoryInterface
+	 */
+	private function createLoadedFirewallMapFactory()
 	{
+		$firewallMapFactory = new FirewallMapFactory;
+
 		$firewallListenerMock = Mockery::mock(RequestMatcherInterface::class, [
 			'getFirewallName' => 'someFirewall'
 		]);
-		$this->firewallMapFactory->addRequestMatcher($firewallListenerMock);
+		$firewallMapFactory->addRequestMatcher($firewallListenerMock);
 
 		$requestMatcherMock = Mockery::mock(FirewallListenerInterface::class, [
 			'getFirewallName' => 'someFirewall'
 		]);
-		$this->firewallMapFactory->addFirewallListener($requestMatcherMock);
+		$firewallMapFactory->addFirewallListener($requestMatcherMock);
 
-		$this->assertInstanceOf(FirewallMapInterface::class, $this->firewallMapFactory->create());
+		return $firewallMapFactory;
 	}
 
 }
