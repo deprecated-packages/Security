@@ -29,15 +29,15 @@ extensions:
 
 First, [read Symfony cookbook](http://symfony.com/doc/current/cookbook/security/voters_data_permission.html)
 
-Then create your voter implementing `Symfony\Component\Security\Core\Authorization\Voter\VoterInterface`
-and register it as service in your `config.neon`:
+Then create new voter implementing `Symfony\Component\Security\Core\Authorization\Voter\VoterInterface`
+and register it as service in `config.neon`:
 
 ```yaml
 services:
 	- App\SomeModule\Security\Voter\MyVoter
 ```
 
-Then in place, where you need to validate access, just use `AuthorizationChecker`:
+Then in place, where we need to validate access, we'll just use `AuthorizationChecker`:
 
 
 ```php
@@ -77,9 +77,11 @@ class Presenter
 
 Original [Symfony firewalls](http://symfony.com/doc/current/components/security/firewall.html) pretty simplified and with modular support by default.
 
-All you need to create is a matcher and a listener.
+All we need to create is a **matcher** and a **listener**.
 
-First, we create matcher that will match all sites in admin module - urls starting with `/admin`:
+#### Matcher 
+
+This service will match all sites in admin module - urls starting with `/admin`:
 
 ```php
 use Symfony\Component\HttpFoundation\Request;
@@ -110,7 +112,7 @@ class AdminRequestMatcher implements RequestMatcherInterface
 }
 ```
 
-Then we create listener, that will check user is logged and with 'admin' role.
+### Then we create listener, that will check user is logged and with 'admin' role.
 Otherwise redirect.
 
 ```php
@@ -171,6 +173,7 @@ services:
 	- LoggedAdminFirewallListener
 ```
 
+That's it!
 
 ## Testing
 
