@@ -19,7 +19,7 @@ Register the extension in `config.neon`:
 
 ```yaml
 extensions:
-	symfonySecurity: Symnedi\Security\DI\SecurityExtension
+	- Symnedi\Security\DI\SecurityExtension
 ```
 
 
