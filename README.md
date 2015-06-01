@@ -92,12 +92,12 @@ class AdminRequestMatcher implements RequestMatcherInterface
 	/**
 	 * {@inheritdoc}
 	 */
-    public function getFirewallName()
-    {
-        return 'adminSecurity';
-    }
-    
-    
+	public function getFirewallName()
+	{
+		return 'adminSecurity';
+	}
+	
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -125,24 +125,24 @@ class LoggedAdminFirewallListener implements FirewallListenerInterface
 {
 
 	/**
-     * @var User
-     */
-    private $user;
-    
+	 * @var User
+	 */
+	private $user;
+	
 
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
-    
-    
+	public function __construct(User $user)
+	{
+		$this->user = $user;
+	}
+	
+	
 	/**
 	 * {@inheritdoc}
 	 */
-    public function getFirewallName()
-    {
-        return 'adminSecurity';
-    }
+	public function getFirewallName()
+	{
+		return 'adminSecurity';
+	}
 
 	
 	/**
@@ -155,8 +155,8 @@ class LoggedAdminFirewallListener implements FirewallListenerInterface
 		}
 
 		if ( ! $this->user->isInRole('admin')) {
-            throw new AbortException;
-        }
+			throw new AbortException;
+		}
 	}
 
 }
