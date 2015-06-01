@@ -79,7 +79,7 @@ Original [Symfony firewalls](http://symfony.com/doc/current/components/security/
 
 All we need to create is a **matcher** and a **listener**.
 
-#### Matcher 
+#### Request Matcher 
 
 This service will match all sites in admin module - urls starting with `/admin`:
 
@@ -112,8 +112,10 @@ class AdminRequestMatcher implements RequestMatcherInterface
 }
 ```
 
-### Then we create listener, that will check user is logged and with 'admin' role.
-Otherwise redirect.
+
+### Firewall Listener
+
+It will ensure that user is logged in and has 'admin' role, otherwise redirect.
 
 ```php
 use Nette\Application\AbortException;
