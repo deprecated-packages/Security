@@ -58,8 +58,6 @@ class SecurityExtension extends CompilerExtension
 	{
 		$this->loadMediator(FirewallMapFactoryInterface::class, FirewallHandlerInterface::class, 'addFirewallHandler');
 		$this->loadMediator(FirewallMapFactoryInterface::class, RequestMatcherInterface::class, 'addRequestMatcher');
-
-		// Symfony\EventDispatcher
 		$this->loadMediator(EventDispatcherInterface::class, EventSubscriberInterface::class, 'addSubscriber');
 	}
 
@@ -111,18 +109,8 @@ class SecurityExtension extends CompilerExtension
 			    }', [
 				'@Symfony\Component\EventDispatcher\EventDispatcherInterface',
 				Events::ON_APPLICATION_REQUEST
-			]) // todo: also create event?
+			])
 		]);
-
-//		$someEvent = new SomeEvent($someArgs);
-//		$this->eventDispatcher->dispatch('eventName', $someEvent);
-
-//		$def->addSetup('$' . $name, [
-//			new Nette\DI\Statement($this->prefix('@manager') . '::createEvent', [
-//				[$class->getName(), $name],
-//				new Code\PhpLiteral('$service->' . $name)
-//			])
-//		]);
 	}
 
 }
