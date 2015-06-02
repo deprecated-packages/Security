@@ -8,7 +8,7 @@ use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Http\FirewallMapFactory;
 use Symnedi\Security\Tests\DI\AbstractSecurityExtensionTestCase;
-use Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource\FirewallListener;
+use Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource\FirewallHandler;
 use Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource\RequestMatcher;
 
 
@@ -27,7 +27,7 @@ class FirewallTest extends AbstractSecurityExtensionTestCase
 			->setClass(RequestMatcher::class);
 
 		$containerBuilder->addDefinition('firewallListener')
-			->setClass(FirewallListener::class);
+			->setClass(FirewallHandler::class);
 
 		$extension->loadConfiguration();
 

@@ -8,8 +8,10 @@ services:
 	-
 		class: Symfony\Component\Security\Core\Authorization\AccessDecisionManager
 		factory: [@Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory, create]
-
-	- Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter
+	-
+	 	class: Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter
+	 	setup:
+	 		- setUser(@Nette\Security\User)
 	-
 		class: Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
 		setup:
@@ -21,5 +23,13 @@ services:
 		class: Symfony\Component\Security\Http\FirewallMap
 		factory: [@Symnedi\Security\Http\FirewallMapFactory, create]
 
-	- Symnedi\Security\EventSubscriber\FirewallSubscriber
+	firewallSubscriber:
+		class: Symnedi\Security\EventSubscriber\FirewallSubscriber
+		autowired: false
 	- Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory
+
+	# event dispatcher
+	eventDispatcher:
+		class: Symfony\Component\EventDispatcher\EventDispatcher
+		setup:
+			- addSubscriber(@firewallSubscriber)

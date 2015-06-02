@@ -9,12 +9,14 @@ namespace Symnedi\Security\DI;
 
 use Kdyby\Events\DI\EventsExtension;
 use Kdyby\Events\EventManager;
+use Kdyby\Events\SymfonyDispatcher;
 use Nette\DI\CompilerExtension;
 use Nette\DI\MissingServiceException;
-use Symfony\Component\Security\Http\FirewallMapInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use Symnedi\Security\Contract\Http\FirewallListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 use Symnedi\Security\EventSubscriber\FirewallSubscriber;
@@ -37,8 +39,9 @@ class SecurityExtension extends CompilerExtension
 		$containerBuilder->prepareClassList();
 
 		$this->loadAccessDecisionManagerFactoryWithVoters();
+		$this->removeKdybySymfonyProxy();
 
-		if ($containerBuilder->findByType(FirewallListenerInterface::class)) {
+		if ($containerBuilder->findByType(FirewallHandlerInterface::class)) {
 			$this->loadFirewallMap();
 		}
 	}
@@ -54,10 +57,16 @@ class SecurityExtension extends CompilerExtension
 	{
 		$this->validateEventDispatcherPresence();
 
-		$this->loadMediator(EventManager::class, FirewallSubscriber::class, 'addEventSubscriber');
+		$this->loadEventManager();
 
-		$this->loadMediator(FirewallMapFactoryInterface::class, FirewallListenerInterface::class, 'addFirewallListener');
+		// dealt manually
+//		$this->loadMediator(EventManager::class, FirewallSubscriber::class, 'addEventSubscriber');
+
+		$this->loadMediator(FirewallMapFactoryInterface::class, FirewallHandlerInterface::class, 'addFirewallHandler');
 		$this->loadMediator(FirewallMapFactoryInterface::class, RequestMatcherInterface::class, 'addRequestMatcher');
+
+		// Symfony\EventDispatcher
+		$this->loadMediator(EventDispatcherInterface::class, EventSubscriberInterface::class, 'addSubscriber');
 	}
 
 
@@ -78,6 +87,17 @@ class SecurityExtension extends CompilerExtension
 	}
 
 
+	private function removeKdybySymfonyProxy()
+	{
+		$containerBuilder = $this->getContainerBuilder();
+
+		// todo: determine Kdyby\EventsExtension: 0 = prefix
+		if ($containerBuilder->hasDefinition('0.symfonyProxy')) {
+			$containerBuilder->removeDefinition('0.symfonyProxy');
+		}
+	}
+
+
 	/**
 	 * @param string $mediatorClass
 	 * @param string $colleagueClass
@@ -91,6 +111,14 @@ class SecurityExtension extends CompilerExtension
 		foreach ($containerBuilder->findByType($colleagueClass) as $colleague) {
 			$mediator->addSetup($adderMethod, ['@' . $colleague->getClass()]);
 		}
+	}
+
+
+	private function loadEventManager()
+	{
+		$containerBuilder = $this->getContainerBuilder();
+		$eventManagerDefinition = $containerBuilder->getDefinition($containerBuilder->getByType(EventManager::class));
+		$eventManagerDefinition->addSetup('addEventSubscriber', ['@firewallSubscriber']);
 	}
 
 }

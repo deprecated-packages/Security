@@ -11,8 +11,9 @@
 		"kdyby/events": "^2.4",
 		"nette/di": "^2.3",
 		"nette/security": "^2.3",
-		"symfony/security-core": "^2.6",
-		"symfony/security-http": "^2.6"
+		"symfony/event-dispatcher": "^2.7",
+		"symfony/security-core": "^2.7",
+		"symfony/security-http": "^2.7"
 	},
 	"require-dev": {
 		"mockery/mockery": "~0.9",

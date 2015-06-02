@@ -15,7 +15,7 @@ use Symnedi\Security\Contract\DI\ModularFirewallInterface;
 /**
  * Mimics @see \Symfony\Component\Security\Http\Firewall\ListenerInterface
  */
-interface FirewallListenerInterface extends ModularFirewallInterface
+interface FirewallHandlerInterface extends ModularFirewallInterface
 {
 
 	function handle(Application $application, Request $applicationRequest);

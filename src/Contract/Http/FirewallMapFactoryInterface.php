@@ -17,7 +17,7 @@ interface FirewallMapFactoryInterface
 	function addRequestMatcher(RequestMatcherInterface $requestMatcher);
 
 
-	function addFirewallListener(FirewallListenerInterface $firewallListener);
+	function addFirewallHandler(FirewallHandlerInterface $firewallHandler);
 
 
 	/**

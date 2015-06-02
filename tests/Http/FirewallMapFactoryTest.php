@@ -5,7 +5,7 @@ namespace Symnedi\Security\Tests\Http;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Security\Http\FirewallMapInterface;
-use Symnedi\Security\Contract\Http\FirewallListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 use Symnedi\Security\Http\FirewallMapFactory;
@@ -29,15 +29,15 @@ class FirewallMapFactoryTest extends PHPUnit_Framework_TestCase
 	{
 		$firewallMapFactory = new FirewallMapFactory;
 
-		$firewallListenerMock = Mockery::mock(RequestMatcherInterface::class, [
+		$requestMatcherMock = Mockery::mock(RequestMatcherInterface::class, [
 			'getFirewallName' => 'someFirewall'
 		]);
-		$firewallMapFactory->addRequestMatcher($firewallListenerMock);
+		$firewallMapFactory->addRequestMatcher($requestMatcherMock);
 
-		$requestMatcherMock = Mockery::mock(FirewallListenerInterface::class, [
+		$firewallHandlerMock = Mockery::mock(FirewallHandlerInterface::class, [
 			'getFirewallName' => 'someFirewall'
 		]);
-		$firewallMapFactory->addFirewallListener($requestMatcherMock);
+		$firewallMapFactory->addFirewallHandler($firewallHandlerMock);
 
 		return $firewallMapFactory;
 	}

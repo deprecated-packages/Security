@@ -8,7 +8,7 @@
 namespace Symnedi\Security\Http;
 
 use Symfony\Component\Security\Http\FirewallMap;
-use Symnedi\Security\Contract\Http\FirewallListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
@@ -22,9 +22,9 @@ class FirewallMapFactory implements FirewallMapFactoryInterface
 	private $requestMatchers = [];
 
 	/**
-	 * @var FirewallListenerInterface[][]
+	 * @var FirewallHandlerInterface[][]
 	 */
-	private $firewallListeners = [];
+	private $firewallHandlers = [];
 
 
 	/**
@@ -39,9 +39,9 @@ class FirewallMapFactory implements FirewallMapFactoryInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function addFirewallListener(FirewallListenerInterface $firewallListener)
+	public function addFirewallHandler(FirewallHandlerInterface $firewallHandler)
 	{
-		$this->firewallListeners[$firewallListener->getFirewallName()][] = $firewallListener;
+		$this->firewallHandlers[$firewallHandler->getFirewallName()][] = $firewallHandler;
 	}
 
 
@@ -52,9 +52,8 @@ class FirewallMapFactory implements FirewallMapFactoryInterface
 	{
 		$firewallMap = new FirewallMap;
 		foreach ($this->requestMatchers as $firewallName => $requestMatcher) {
-			if (isset($this->firewallListeners[$firewallName])) {
-				$listeners = $this->firewallListeners[$firewallName];
-				$firewallMap->add($requestMatcher, $listeners);
+			if (isset($this->firewallHandlers[$firewallName])) {
+				$firewallMap->add($requestMatcher, $this->firewallHandlers[$firewallName]);
 			}
 		}
 		return $firewallMap;
