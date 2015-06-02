@@ -36,8 +36,7 @@ class NetteTokenAdapterTest extends PHPUnit_Framework_TestCase
 			'isLoggedIn' => TRUE,
 			'getStorage' => $userStorageMock,
 		]);
-		$this->netteTokenAdapter = new NetteTokenAdapter;
-		$this->netteTokenAdapter->setUser($userMock);
+		$this->netteTokenAdapter = new NetteTokenAdapter($userMock);
 	}
 
 
