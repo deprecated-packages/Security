@@ -11,10 +11,10 @@ use Nette\Application\Application;
 use Nette\Application\UI\Presenter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symnedi\Security\Nette\Events;
+use Symnedi\Security\Bridge\Nette\Events;
 
 
-class CheckRequirementsSubscriber implements EventSubscriberInterface
+class CheckRequirementsSymfonySubscriber implements EventSubscriberInterface
 {
 
 	/**

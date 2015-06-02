@@ -5,11 +5,11 @@
  * Copyright (c) 2014 Tomas Votruba (http://tomasvotruba.cz)
  */
 
-namespace Symnedi\Security\Bridge\Nette;
+namespace Symnedi\Security\Nette;
 
 
 /**
- * Events in Nette App life cycle
+ * Events in Nette Application life cycle
  */
 class Events
 {
@@ -18,6 +18,11 @@ class Events
 	 * @var string
 	 */
 	const ON_APPLICATION_REQUEST = 'Nette\Application\Application::onRequest';
+
+	/**
+	 * @var string
+	 */
+	const ON_PRESENTER = 'Nette\Application\Application::onPresenter';
 
 	/**
 	 * @var string

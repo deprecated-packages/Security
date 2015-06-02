@@ -7,5 +7,4 @@ services:
 
 
 extensions:
-	- Kdyby\Events\DI\EventsExtension
 	- Symnedi\Security\DI\SecurityExtension

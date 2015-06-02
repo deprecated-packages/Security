@@ -12,7 +12,7 @@ use Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory;
 use Symnedi\Security\Tests\DI\SecurityExtensionSource\SomeVoter;
 
 
-class SecurityExtensionTestCase extends AbstractSecurityExtensionTestCase
+class SecurityExtensionTest extends AbstractSecurityExtensionTestCase
 {
 
 	public function testLoadConfiguration()
@@ -49,7 +49,7 @@ class SecurityExtensionTestCase extends AbstractSecurityExtensionTestCase
 
 		$extension->beforeCompile();
 
-		$this->assertCount(1, $accessDecisionManagerFactoryDefinition->getSetup());
+		$this->assertCount(2, $accessDecisionManagerFactoryDefinition->getSetup());
 	}
 
 }

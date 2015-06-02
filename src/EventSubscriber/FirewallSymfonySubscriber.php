@@ -11,16 +11,15 @@ use Nette\Application\Application;
 use Nette\Application\Request;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\FirewallMapInterface;
+use Symnedi\Security\Bridge\Nette\Events;
 use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
-use Symnedi\Security\Event\ApplicationRequestEvent;
-use Symnedi\Security\Nette\Events;
 
 
 /**
  * Mimics @see Symfony\Component\Security\Http\Firewall
  */
-class FirewallSubscriber implements EventSubscriberInterface
+class FirewallSymfonySubscriber implements EventSubscriberInterface
 {
 
 	/**
@@ -48,18 +47,18 @@ class FirewallSubscriber implements EventSubscriberInterface
 	 */
 	public static function getSubscribedEvents()
 	{
-		return [Events::ON_APPLICATION_REQUEST => 'onRequest'];
+		return [Events::ON_APPLICATION_REQUEST];
 	}
 
 
-	public function onRequest(ApplicationRequestEvent $applicationRequestEvent)
+	public function onRequest(Application $application, Request $applicationRequest)
 	{
 		$symfonyRequest = $this->symfonyRequestAdapterFactory->create();
 
 		/** @var FirewallHandlerInterface[] $listeners */
 		list($listeners) = $this->firewallMap->getListeners($symfonyRequest);
 		foreach ($listeners as $listener) {
-			$listener->handle($applicationRequestEvent->getApplication(), $applicationRequestEvent->getRequest());
+			$listener->handle($application, $applicationRequest);
 		}
 	}
 

@@ -4,6 +4,7 @@ services:
 	- Symfony\Component\Security\Core\Authorization\AuthorizationChecker
 
 	# access decision manager
+	- Symnedi\Security\Core\Authorization\Voter\DummyVoter
 	- Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory
 	-
 		class: Symfony\Component\Security\Core\Authorization\AccessDecisionManager
@@ -23,13 +24,8 @@ services:
 		class: Symfony\Component\Security\Http\FirewallMap
 		factory: [@Symnedi\Security\Http\FirewallMapFactory, create]
 
-	firewallSubscriber:
-		class: Symnedi\Security\EventSubscriber\FirewallSubscriber
-		autowired: false
+	- Symnedi\Security\EventSubscriber\FirewallSubscriber
 	- Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory
 
 	# event dispatcher
-	eventDispatcher:
-		class: Symfony\Component\EventDispatcher\EventDispatcher
-		setup:
-			- addSubscriber(@firewallSubscriber)
+	- Symfony\Component\EventDispatcher\EventDispatcher

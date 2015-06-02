@@ -9,10 +9,11 @@ use Nette\Application\Request;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 use Symfony\Component\Security\Http\FirewallMapInterface;
-use Symnedi\Security\Bridge\Nette\Events;
 use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
+use Symnedi\Security\Event\ApplicationRequestEvent;
 use Symnedi\Security\EventSubscriber\FirewallSubscriber;
+use Symnedi\Security\Nette\Events;
 
 
 class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
@@ -45,16 +46,19 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 
 	public function testGetSubscribedEvents()
 	{
-		$this->assertSame([Events::ON_APPLICATION_REQUEST], $this->firewall->getSubscribedEvents());
+		$this->assertSame([
+			Events::ON_APPLICATION_REQUEST => 'onRequest'
+		], $this->firewall->getSubscribedEvents());
 	}
 
 
 	public function testOnRequest()
 	{
-		$applicationMock = Mockery::mock(Application::class);
-		$applicationRequestMock = Mockery::mock(Request::class);
-
-		$this->firewall->onRequest($applicationMock, $applicationRequestMock);
+		$applicationRequestEventMock = Mockery::mock(ApplicationRequestEvent::class, [
+			'getApplication' => Mockery::mock(Application::class),
+			'getRequest' => Mockery::mock(Request::class)
+		]);
+		$this->firewall->onRequest($applicationRequestEventMock);
 	}
 
 }

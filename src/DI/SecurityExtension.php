@@ -7,19 +7,17 @@
 
 namespace Symnedi\Security\DI;
 
-use Kdyby\Events\DI\EventsExtension;
-use Kdyby\Events\EventManager;
-use Kdyby\Events\SymfonyDispatcher;
+use Nette\Application\Application;
 use Nette\DI\CompilerExtension;
-use Nette\DI\MissingServiceException;
+use Nette\DI\Statement;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
+use Symnedi\Security\Nette\Events;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
-use Symnedi\Security\EventSubscriber\FirewallSubscriber;
 
 
 class SecurityExtension extends CompilerExtension
@@ -39,7 +37,10 @@ class SecurityExtension extends CompilerExtension
 		$containerBuilder->prepareClassList();
 
 		$this->loadAccessDecisionManagerFactoryWithVoters();
+
 		$this->removeKdybySymfonyProxy();
+
+		$this->bindNetteEvents();
 
 		if ($containerBuilder->findByType(FirewallHandlerInterface::class)) {
 			$this->loadFirewallMap();
@@ -55,35 +56,11 @@ class SecurityExtension extends CompilerExtension
 
 	private function loadFirewallMap()
 	{
-		$this->validateEventDispatcherPresence();
-
-		$this->loadEventManager();
-
-		// dealt manually
-//		$this->loadMediator(EventManager::class, FirewallSubscriber::class, 'addEventSubscriber');
-
 		$this->loadMediator(FirewallMapFactoryInterface::class, FirewallHandlerInterface::class, 'addFirewallHandler');
 		$this->loadMediator(FirewallMapFactoryInterface::class, RequestMatcherInterface::class, 'addRequestMatcher');
 
 		// Symfony\EventDispatcher
 		$this->loadMediator(EventDispatcherInterface::class, EventSubscriberInterface::class, 'addSubscriber');
-	}
-
-
-	private function validateEventDispatcherPresence()
-	{
-		$containerBuilder = $this->getContainerBuilder();
-		$containerBuilder->prepareClassList();
-
-		if ( ! $containerBuilder->findByType(EventManager::class)) {
-			throw new MissingServiceException(
-				sprintf(
-					'Instance of "%s" required by firewalls is missing. You might need to register %s extension".',
-					EventManager::class,
-					EventsExtension::class
-				)
-			);
-		}
 	}
 
 
@@ -107,18 +84,45 @@ class SecurityExtension extends CompilerExtension
 	{
 		$containerBuilder = $this->getContainerBuilder();
 
-		$mediator = $containerBuilder->getDefinition($containerBuilder->getByType($mediatorClass));
-		foreach ($containerBuilder->findByType($colleagueClass) as $colleague) {
-			$mediator->addSetup($adderMethod, ['@' . $colleague->getClass()]);
+		$mediatorDefinition = $containerBuilder->getDefinition($containerBuilder->getByType($mediatorClass));
+		foreach ($containerBuilder->findByType($colleagueClass) as $colleagueDefinition) {
+			$mediatorDefinition->addSetup($adderMethod, ['@' . $colleagueDefinition->getClass()]);
 		}
 	}
 
 
-	private function loadEventManager()
+	private function bindNetteEvents()
 	{
 		$containerBuilder = $this->getContainerBuilder();
-		$eventManagerDefinition = $containerBuilder->getDefinition($containerBuilder->getByType(EventManager::class));
-		$eventManagerDefinition->addSetup('addEventSubscriber', ['@firewallSubscriber']);
+
+		if ( ! $containerBuilder->getByType(Application::class)) {
+			return;
+		}
+
+		$application = $containerBuilder->getDefinition($containerBuilder->getByType(Application::class));
+
+		// array of events!
+
+		$application->addSetup('$service->onRequest[] = ?;', [
+			new Statement('
+				function ($app, $presenter) {
+			        $event = new Symnedi\Security\Event\ApplicationRequestEvent($app, $presenter);
+			        ?->dispatch(?, $event);
+			    }', [
+				'@Symfony\Component\EventDispatcher\EventDispatcherInterface',
+				Events::ON_APPLICATION_REQUEST
+			]) // todo: also create event?
+		]);
+
+//		$someEvent = new SomeEvent($someArgs);
+//		$this->eventDispatcher->dispatch('eventName', $someEvent);
+
+//		$def->addSetup('$' . $name, [
+//			new Nette\DI\Statement($this->prefix('@manager') . '::createEvent', [
+//				[$class->getName(), $name],
+//				new Code\PhpLiteral('$service->' . $name)
+//			])
+//		]);
 	}
 
 }
