@@ -38,13 +38,13 @@ class FirewallHandler implements FirewallHandlerInterface
 	 */
 	public function handle(Application $application, Request $applicationRequest)
 	{
-//		if ( ! $this->user->isLoggedIn()) {
+		if ( ! $this->user->isLoggedIn()) {
 			throw new AbortException;
-//		}
-//
-//		if ( ! $this->user->isInRole('admin')) {
-//			throw new AbortException;
-//		}
+		}
+
+		if ( ! $this->user->isInRole('admin')) {
+			throw new AbortException;
+		}
 	}
 
 }
