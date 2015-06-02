@@ -11,8 +11,10 @@ use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
+use Symnedi\Security\Event\ApplicationEvent;
 use Symnedi\Security\Event\ApplicationRequestEvent;
 use Symnedi\Security\EventSubscriber\FirewallSubscriber;
+use Symnedi\Security\Nette\ApplicationEvents;
 use Symnedi\Security\Nette\Events;
 
 
@@ -46,9 +48,10 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 
 	public function testGetSubscribedEvents()
 	{
-		$this->assertSame([
-			Events::ON_APPLICATION_REQUEST => 'onRequest'
-		], $this->firewall->getSubscribedEvents());
+		$this->assertSame(
+			[ApplicationEvents::ON_APPLICATION_REQUEST => 'onRequest'],
+			$this->firewall->getSubscribedEvents()
+		);
 	}
 
 

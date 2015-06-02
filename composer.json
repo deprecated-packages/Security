@@ -15,12 +15,12 @@
 		"symfony/security-http": "^2.7"
 	},
 	"require-dev": {
+		"kdyby/events": "^2.4",
 		"mockery/mockery": "~0.9",
 		"nette/application": "^2.3",
 		"nette/bootstrap": "^2.3",
 		"nette/robot-loader": "^2.3",
-		"tracy/tracy": "^2.3",
-		"kdyby/events": "^2.4"
+		"tracy/tracy": "^2.3"
 	},
 	"autoload": {
 		"psr-4": {

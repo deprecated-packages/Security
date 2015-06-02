@@ -13,7 +13,8 @@ use Nette\DI\Statement;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
-use Symnedi\Security\Nette\Events;
+use Symnedi\Security\Event\ApplicationRequestEvent;
+use Symnedi\Security\Nette\ApplicationEvents;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
@@ -38,8 +39,10 @@ class SecurityExtension extends CompilerExtension
 
 		$this->loadAccessDecisionManagerFactoryWithVoters();
 
+		// todo: move to EventDispatcher
 		$this->removeKdybySymfonyProxy();
 
+		// todo: move to EventDispatcher
 		$this->bindNetteEvents();
 
 		if ($containerBuilder->findByType(FirewallHandlerInterface::class)) {
@@ -70,6 +73,7 @@ class SecurityExtension extends CompilerExtension
 		if ($containerBuilder->hasDefinition('0.symfonyProxy')) {
 			$containerBuilder->removeDefinition('0.symfonyProxy');
 		}
+//		die;
 	}
 
 
@@ -93,6 +97,10 @@ class SecurityExtension extends CompilerExtension
 	{
 		$containerBuilder = $this->getContainerBuilder();
 
+		// class->property
+		// eventClass(args)
+		// eventName
+
 		if ( ! $containerBuilder->getByType(Application::class)) {
 			return;
 		}
@@ -104,11 +112,13 @@ class SecurityExtension extends CompilerExtension
 		$application->addSetup('$service->onRequest[] = ?;', [
 			new Statement('
 				function ($app, $presenter) {
-			        $event = new Symnedi\Security\Event\ApplicationRequestEvent($app, $presenter);
+					$class = ?;
+			        $event = new $class($app, $presenter);
 			        ?->dispatch(?, $event);
 			    }', [
-				'@Symfony\Component\EventDispatcher\EventDispatcherInterface',
-				Events::ON_APPLICATION_REQUEST
+				ApplicationRequestEvent::class,
+				'@' . EventDispatcherInterface::class,
+				ApplicationEvents::ON_APPLICATION_REQUEST
 			])
 		]);
 	}

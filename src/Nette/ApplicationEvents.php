@@ -9,9 +9,9 @@ namespace Symnedi\Security\Nette;
 
 
 /**
- * Events in Nette Application life cycle
+ * Events in Nette Application life cycle.
  */
-class Events
+class ApplicationEvents
 {
 
 	/**
@@ -23,10 +23,5 @@ class Events
 	 * @var string
 	 */
 	const ON_PRESENTER = 'Nette\Application\Application::onPresenter';
-
-	/**
-	 * @var string
-	 */
-	const ON_PRESENTER_STARTUP = 'Nette\Application\UI\Presenter::onStartup';
 
 }

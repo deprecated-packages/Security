@@ -11,6 +11,7 @@ use Nette\Application\Application;
 use Nette\Application\UI\Presenter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symnedi\Security\Nette\ApplicationEvents;
 use Symnedi\Security\Nette\Events;
 
 
@@ -34,7 +35,7 @@ class CheckRequirementsSubscriber implements EventSubscriberInterface
 	 */
 	public static function getSubscribedEvents()
 	{
-		return [Events::ON_PRESENTER];
+		return [ApplicationEvents::ON_PRESENTER => 'onPresenter'];
 	}
 
 

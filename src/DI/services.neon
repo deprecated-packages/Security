@@ -9,10 +9,7 @@ services:
 	-
 		class: Symfony\Component\Security\Core\Authorization\AccessDecisionManager
 		factory: [@Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory, create]
-	-
-	 	class: Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter
-	 	setup:
-	 		- setUser(@Nette\Security\User)
+	- Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter
 	-
 		class: Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
 		setup:

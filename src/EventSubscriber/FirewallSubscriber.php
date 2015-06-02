@@ -14,6 +14,7 @@ use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Event\ApplicationRequestEvent;
+use Symnedi\Security\Nette\ApplicationEvents;
 use Symnedi\Security\Nette\Events;
 
 
@@ -48,7 +49,7 @@ class FirewallSubscriber implements EventSubscriberInterface
 	 */
 	public static function getSubscribedEvents()
 	{
-		return [Events::ON_APPLICATION_REQUEST => 'onRequest'];
+		return [ApplicationEvents::ON_APPLICATION_REQUEST => 'onRequest'];
 	}
 
 
