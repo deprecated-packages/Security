@@ -12,10 +12,10 @@
 		"nette/security": "^2.3",
 		"symfony/event-dispatcher": "^2.7",
 		"symfony/security-core": "^2.7",
-		"symfony/security-http": "^2.7"
+		"symfony/security-http": "^2.7",
+		"symnedi/event-dispatcher": "^0.1"
 	},
 	"require-dev": {
-		"kdyby/events": "^2.4",
 		"mockery/mockery": "~0.9",
 		"nette/application": "^2.3",
 		"nette/bootstrap": "^2.3",

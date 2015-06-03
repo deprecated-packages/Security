@@ -23,6 +23,3 @@ services:
 
 	- Symnedi\Security\EventSubscriber\FirewallSubscriber
 	- Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory
-
-	# event dispatcher
-	- Symfony\Component\EventDispatcher\EventDispatcher

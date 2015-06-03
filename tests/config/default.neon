@@ -1,2 +1,3 @@
 extensions:
+	- Symnedi\EventDispatcher\DI\EventDispatcherExtension
 	- Symnedi\Security\DI\SecurityExtension
