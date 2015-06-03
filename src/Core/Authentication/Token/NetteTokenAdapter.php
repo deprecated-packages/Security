@@ -28,7 +28,6 @@ class NetteTokenAdapter implements TokenInterface
 	}
 
 
-
 	/**
 	 * {@inheritdoc}
 	 */
