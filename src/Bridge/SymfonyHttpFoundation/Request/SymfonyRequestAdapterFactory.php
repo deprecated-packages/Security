@@ -9,7 +9,6 @@ namespace Symnedi\Security\Bridge\SymfonyHttpFoundation\Request;
 
 use Nette\Http\IRequest as NetteRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpFoundation\ServerBag;
 
 
 class SymfonyRequestAdapterFactory

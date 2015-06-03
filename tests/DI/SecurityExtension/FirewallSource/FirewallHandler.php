@@ -6,10 +6,10 @@ use Nette\Application\AbortException;
 use Nette\Application\Application;
 use Nette\Application\Request;
 use Nette\Security\User;
-use Symnedi\Security\Contract\Http\FirewallListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 
 
-class FirewallListener implements FirewallListenerInterface
+class FirewallHandler implements FirewallHandlerInterface
 {
 
 	/**

@@ -2,7 +2,6 @@
 
 namespace Symnedi\Security\Tests\EventSubscriber;
 
-use Kdyby\Events\EventManager;
 use Mockery;
 use Nette\Application\Application;
 use Nette\Application\ForbiddenRequestException;
@@ -10,8 +9,10 @@ use Nette\Application\Request;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 use Symfony\Component\Security\Http\FirewallMapInterface;
+use Symnedi\EventDispatcher\Event\ApplicationRequestEvent;
+use Symnedi\EventDispatcher\NetteApplicationEvents;
 use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
-use Symnedi\Security\Contract\Http\FirewallListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\EventSubscriber\FirewallSubscriber;
 
 
@@ -26,7 +27,7 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$listener = Mockery::mock(FirewallListenerInterface::class, [
+		$listener = Mockery::mock(FirewallHandlerInterface::class, [
 			'handle' => function () {
 				throw new ForbiddenRequestException;
 			}
@@ -36,26 +37,29 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 			'getListeners' => [[$listener], '']
 		]);
 
-		$eventManagerMock = Mockery::mock(EventManager::class);
 		$symfonyRequestAdapterFactory = Mockery::mock(SymfonyRequestAdapterFactory::class, [
 			'create' => Mockery::mock(SymfonyHttpRequest::class)
 		]);
-		$this->firewall = new FirewallSubscriber($firewallMapMock, $eventManagerMock, $symfonyRequestAdapterFactory);
+		$this->firewall = new FirewallSubscriber($firewallMapMock, $symfonyRequestAdapterFactory);
 	}
 
 
 	public function testGetSubscribedEvents()
 	{
-		$this->assertSame([Application::class . '::onRequest'], $this->firewall->getSubscribedEvents());
+		$this->assertSame(
+			[NetteApplicationEvents::ON_REQUEST => 'onRequest'],
+			$this->firewall->getSubscribedEvents()
+		);
 	}
 
 
 	public function testOnRequest()
 	{
-		$applicationMock = Mockery::mock(Application::class);
-		$applicationRequestMock = Mockery::mock(Request::class);
-
-		$this->firewall->onRequest($applicationMock, $applicationRequestMock);
+		$applicationRequestEventMock = Mockery::mock(ApplicationRequestEvent::class, [
+			'getApplication' => Mockery::mock(Application::class),
+			'getRequest' => Mockery::mock(Request::class)
+		]);
+		$this->firewall->onRequest($applicationRequestEventMock);
 	}
 
 }

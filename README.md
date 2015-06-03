@@ -20,6 +20,7 @@ Register the extension in `config.neon`:
 ```yaml
 extensions:
 	- Symnedi\Security\DI\SecurityExtension
+	- Symnedi\EventDispatcher\DI\EventDispatcherExtension
 ```
 
 

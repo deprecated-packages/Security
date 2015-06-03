@@ -7,17 +7,12 @@
 
 namespace Symnedi\Security\DI;
 
-use Kdyby\Events\DI\EventsExtension;
-use Kdyby\Events\EventManager;
 use Nette\DI\CompilerExtension;
-use Nette\DI\MissingServiceException;
-use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use Symnedi\Security\Contract\Http\FirewallListenerInterface;
+use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
-use Symnedi\Security\EventSubscriber\FirewallSubscriber;
 
 
 class SecurityExtension extends CompilerExtension
@@ -38,7 +33,7 @@ class SecurityExtension extends CompilerExtension
 
 		$this->loadAccessDecisionManagerFactoryWithVoters();
 
-		if ($containerBuilder->findByType(FirewallListenerInterface::class)) {
+		if ($containerBuilder->findByType(FirewallHandlerInterface::class)) {
 			$this->loadFirewallMap();
 		}
 	}
@@ -52,29 +47,8 @@ class SecurityExtension extends CompilerExtension
 
 	private function loadFirewallMap()
 	{
-		$this->validateEventDispatcherPresence();
-
-		$this->loadMediator(EventManager::class, FirewallSubscriber::class, 'addEventSubscriber');
-
-		$this->loadMediator(FirewallMapFactoryInterface::class, FirewallListenerInterface::class, 'addFirewallListener');
+		$this->loadMediator(FirewallMapFactoryInterface::class, FirewallHandlerInterface::class, 'addFirewallHandler');
 		$this->loadMediator(FirewallMapFactoryInterface::class, RequestMatcherInterface::class, 'addRequestMatcher');
-	}
-
-
-	private function validateEventDispatcherPresence()
-	{
-		$containerBuilder = $this->getContainerBuilder();
-		$containerBuilder->prepareClassList();
-
-		if ( ! $containerBuilder->findByType(EventManager::class)) {
-			throw new MissingServiceException(
-				sprintf(
-					'Instance of "%s" required by firewalls is missing. You might need to register %s extension".',
-					EventManager::class,
-					EventsExtension::class
-				)
-			);
-		}
 	}
 
 
@@ -87,9 +61,9 @@ class SecurityExtension extends CompilerExtension
 	{
 		$containerBuilder = $this->getContainerBuilder();
 
-		$mediator = $containerBuilder->getDefinition($containerBuilder->getByType($mediatorClass));
-		foreach ($containerBuilder->findByType($colleagueClass) as $colleague) {
-			$mediator->addSetup($adderMethod, ['@' . $colleague->getClass()]);
+		$mediatorDefinition = $containerBuilder->getDefinition($containerBuilder->getByType($mediatorClass));
+		foreach ($containerBuilder->findByType($colleagueClass) as $colleagueDefinition) {
+			$mediatorDefinition->addSetup($adderMethod, ['@' . $colleagueDefinition->getClass()]);
 		}
 	}
 
