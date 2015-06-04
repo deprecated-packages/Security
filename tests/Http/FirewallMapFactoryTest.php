@@ -4,9 +4,9 @@ namespace Symnedi\Security\Tests\Http;
 
 use Mockery;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
+use Symnedi\Security\Contract\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 use Symnedi\Security\Http\FirewallMapFactory;
 

@@ -4,7 +4,7 @@ namespace Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource;
 
 use Nette\Application\AbortException;
 use Nette\Application\Application;
-use Nette\Application\Request;
+use Nette\Http\Request;
 use Nette\Security\User;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 

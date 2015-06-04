@@ -5,14 +5,13 @@ namespace Symnedi\Security\Tests\EventSubscriber;
 use Mockery;
 use Nette\Application\Application;
 use Nette\Application\ForbiddenRequestException;
-use Nette\Application\Request;
+use Nette\Http\Request;
+use Nette\Http\UrlScript;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
-use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\EventDispatcher\Event\ApplicationRequestEvent;
 use Symnedi\EventDispatcher\NetteApplicationEvents;
-use Symnedi\Security\Bridge\SymfonyHttpFoundation\Request\SymfonyRequestAdapterFactory;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
+use Symnedi\Security\Contract\Http\FirewallMapInterface;
 use Symnedi\Security\EventSubscriber\FirewallSubscriber;
 
 
@@ -37,10 +36,8 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 			'getListeners' => [[$listener], '']
 		]);
 
-		$symfonyRequestAdapterFactory = Mockery::mock(SymfonyRequestAdapterFactory::class, [
-			'create' => Mockery::mock(SymfonyHttpRequest::class)
-		]);
-		$this->firewall = new FirewallSubscriber($firewallMapMock, $symfonyRequestAdapterFactory);
+		$request = new Request((new UrlScript)->setScriptPath('admin/script.php'));
+		$this->firewall = new FirewallSubscriber($firewallMapMock, $request);
 	}
 
 
@@ -57,7 +54,11 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 	{
 		$applicationRequestEventMock = Mockery::mock(ApplicationRequestEvent::class, [
 			'getApplication' => Mockery::mock(Application::class),
-			'getRequest' => Mockery::mock(Request::class)
+			'getRequest' => Mockery::mock(Request::class, [
+				'getParameters' => [
+					'parameter' => 'value'
+				]
+			])
 		]);
 		$this->firewall->onRequest($applicationRequestEventMock);
 	}

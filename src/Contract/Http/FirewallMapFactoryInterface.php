@@ -7,7 +7,6 @@
 
 namespace Symnedi\Security\Contract\Http;
 
-use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
 
