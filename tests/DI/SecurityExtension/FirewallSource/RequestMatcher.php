@@ -25,7 +25,7 @@ class RequestMatcher implements RequestMatcherInterface
 	{
 		$url = $request->getUrl();
 		// match all, just for testing purposes only
-		return strpos($url, '/') === 0;
+		return strpos($url->getScriptPath(), '/') === 0;
 	}
 
 }

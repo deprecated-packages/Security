@@ -53,7 +53,7 @@ class FirewallSubscriber implements EventSubscriberInterface
 		/** @var FirewallHandlerInterface[] $listeners */
 		list($listeners) = $this->firewallMap->getListeners($this->request);
 		foreach ($listeners as $listener) {
-			$listener->handle($applicationRequestEvent->getApplication(), $applicationRequestEvent->getRequest());
+			$listener->handle($applicationRequestEvent->getApplication(), $this->request);
 		}
 	}
 

@@ -8,7 +8,7 @@
 namespace Symnedi\Security\Contract\Http;
 
 use Nette\Application\Application;
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use Symnedi\Security\Contract\DI\ModularFirewallInterface;
 
 
@@ -18,6 +18,6 @@ use Symnedi\Security\Contract\DI\ModularFirewallInterface;
 interface FirewallHandlerInterface extends ModularFirewallInterface
 {
 
-	function handle(Application $application, Request $request);
+	function handle(Application $application, IRequest $request);
 
 }

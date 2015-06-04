@@ -4,7 +4,7 @@ namespace Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource;
 
 use Nette\Application\AbortException;
 use Nette\Application\Application;
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use Nette\Security\User;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 
@@ -36,7 +36,7 @@ class FirewallHandler implements FirewallHandlerInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function handle(Application $application, Request $applicationRequest)
+	public function handle(Application $application, IRequest $request)
 	{
 		if ( ! $this->user->isLoggedIn()) {
 			throw new AbortException;

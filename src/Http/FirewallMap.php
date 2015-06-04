@@ -7,7 +7,7 @@
 
 namespace Symnedi\Security\Http;
 
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use Symfony\Component\Security\Http\Firewall\ExceptionListener;
 use Symnedi\Security\Contract\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
@@ -40,7 +40,7 @@ class FirewallMap implements FirewallMapInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getListeners(Request $request)
+	public function getListeners(IRequest $request)
 	{
 		foreach ($this->map as $elements) {
 			if ($elements[0] === NULL || $elements[0]->matches($request)) {

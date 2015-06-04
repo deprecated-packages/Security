@@ -7,7 +7,7 @@
 
 namespace Symnedi\Security\Contract\Http;
 
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use Symfony\Component\Security\Http\Firewall\ExceptionListener;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
@@ -39,10 +39,10 @@ interface FirewallMapInterface
 	 * If there is no exception listener, the second element of the outer array
 	 * must be null.
 	 *
-	 * @param Request $request
+	 * @param IRequest $request
 	 *
 	 * @return array of the format array(array(AuthenticationListener), ExceptionListener)
 	 */
-	function getListeners(Request $request);
+	function getListeners(IRequest $request);
 
 }
