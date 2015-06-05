@@ -7,7 +7,7 @@
 
 namespace Symnedi\Security\Contract\HttpFoundation;
 
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use Symnedi\Security\Contract\DI\ModularFirewallInterface;
 
 
@@ -20,10 +20,10 @@ interface RequestMatcherInterface extends ModularFirewallInterface
 	/**
 	 * Decides whether the rule(s) implemented by the strategy matches the supplied request.
 	 *
-	 * @param Request $request The request to check for a match
+	 * @param IRequest $request The request to check for a match
 	 *
 	 * @return bool true if the request matches, false otherwise
 	 */
-	function matches(Request $request);
+	function matches(IRequest $request);
 
 }

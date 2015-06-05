@@ -2,7 +2,7 @@
 
 namespace Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource;
 
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
 
@@ -21,7 +21,7 @@ class RequestMatcher implements RequestMatcherInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function matches(Request $request)
+	public function matches(IRequest $request)
 	{
 		$url = $request->getUrl();
 		// match all, just for testing purposes only
