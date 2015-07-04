@@ -8,19 +8,18 @@
 	],
 	"require": {
 		"php": ">=5.6",
-		"nette/di": "^2.3",
-		"nette/security": "^2.3",
-		"symfony/event-dispatcher": "^2.7",
-		"symfony/security-core": "^2.7",
-		"symfony/security-http": "^2.7",
-		"symnedi/event-dispatcher": "^0.1"
+		"nette/di": "~2.3.0",
+		"nette/security": "~2.3.0",
+		"symfony/event-dispatcher": "~2.7.0",
+		"symfony/security-core": "~2.7.0",
+		"symfony/security-http": "~2.7.0",
+		"symnedi/event-dispatcher": "~0.1"
 	},
 	"require-dev": {
-		"mockery/mockery": "~0.9",
-		"nette/application": "^2.3",
-		"nette/bootstrap": "^2.3",
-		"nette/robot-loader": "^2.3",
-		"tracy/tracy": "^2.3"
+		"nette/application": "~2.3",
+		"nette/bootstrap": "~2.3",
+		"nette/robot-loader": "~2.3",
+		"tracy/tracy": "~2.3"
 	},
 	"autoload": {
 		"psr-4": {
