@@ -3,7 +3,6 @@
 namespace Symnedi\Security\Tests\Core\Authorization;
 
 use InvalidArgumentException;
-use Mockery;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -34,8 +33,8 @@ class AccessDecisionManagerFactoryTest extends PHPUnit_Framework_TestCase
 
 	public function testCreateWithOneVoter()
 	{
-		$voterMock = Mockery::mock(VoterInterface::class);
-		$this->accessDecisionManagerFactory->addVoter($voterMock);
+		$voterMock = $this->prophesize(VoterInterface::class);
+		$this->accessDecisionManagerFactory->addVoter($voterMock->reveal());
 		$accessDecisionManager = $this->accessDecisionManagerFactory->create();
 		$this->assertInstanceOf(AccessDecisionManager::class, $accessDecisionManager);
 	}

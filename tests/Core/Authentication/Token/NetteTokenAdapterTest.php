@@ -22,22 +22,20 @@ class NetteTokenAdapterTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$userStorageMock = Mockery::mock(UserStorage::class, [
-			'setAuthenticated' => '...'
-		]);
+		$userStorageMock = $this->prophesize(UserStorage::class);
+		$userStorageMock->setAuthenticated('...')->willReturn('...');
 
-		$identityMock = Mockery::mock(Identity::class, [
-			'getData' => 'attributes'
-		]);
+		$identityMock = $this->prophesize(Identity::class);
+		$identityMock->getData()->willReturn('attributes');
 
-		$userMock = Mockery::mock(User::class, [
-			'getRoles' => ['user'],
-			'getIdentity' => $identityMock,
-			'isLoggedIn' => TRUE,
-			'getStorage' => $userStorageMock,
-		]);
+		$userMock = $this->prophesize(User::class);
+		$userMock->getRoles()->willReturn(['user']);
+		$userMock->getIdentity()->willReturn($identityMock->reveal());
+		$userMock->isLoggedIn()->willReturn(TRUE);
+		$userMock->getStorage()->willReturn($userStorageMock->reveal());
+
 		$this->netteTokenAdapter = (new NetteTokenAdapter);
-		$this->netteTokenAdapter->setUser($userMock);
+		$this->netteTokenAdapter->setUser($userMock->reveal());
 	}
 
 

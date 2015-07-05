@@ -29,15 +29,13 @@ class FirewallMapFactoryTest extends PHPUnit_Framework_TestCase
 	{
 		$firewallMapFactory = new FirewallMapFactory;
 
-		$requestMatcherMock = Mockery::mock(RequestMatcherInterface::class, [
-			'getFirewallName' => 'someFirewall'
-		]);
-		$firewallMapFactory->addRequestMatcher($requestMatcherMock);
+		$requestMatcherMock = $this->prophesize(RequestMatcherInterface::class);
+		$requestMatcherMock->getFirewallName()->willReturn('someFirewall');
+		$firewallMapFactory->addRequestMatcher($requestMatcherMock->reveal());
 
-		$firewallHandlerMock = Mockery::mock(FirewallHandlerInterface::class, [
-			'getFirewallName' => 'someFirewall'
-		]);
-		$firewallMapFactory->addFirewallHandler($firewallHandlerMock);
+		$firewallHandlerMock = $this->prophesize(FirewallHandlerInterface::class);
+		$firewallHandlerMock->getFirewallName()->willReturn('someFirewall');
+		$firewallMapFactory->addFirewallHandler($firewallHandlerMock->reveal());
 
 		return $firewallMapFactory;
 	}

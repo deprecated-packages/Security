@@ -13,11 +13,11 @@ class AuthenticationManagerTest extends PHPUnit_Framework_TestCase
 
 	public function testCase()
 	{
-		$tokenMock = Mockery::mock(TokenInterface::class);
+		$tokenMock = $this->prophesize(TokenInterface::class);
 		$authenticationManager = new AuthenticationManager;
 
-		$resolvedToken = $authenticationManager->authenticate($tokenMock);
-		$this->assertSame($resolvedToken, $tokenMock);
+		$resolvedToken = $authenticationManager->authenticate($tokenMock->reveal());
+		$this->assertSame($resolvedToken, $tokenMock->reveal());
 	}
 
 }

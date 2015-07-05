@@ -2,12 +2,13 @@
 
 namespace Symnedi\Security\Tests\EventSubscriber;
 
-use Mockery;
 use Nette\Application\Application;
 use Nette\Application\ForbiddenRequestException;
+use Nette\Application\Request as ApplicationRequest;
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
 use PHPUnit_Framework_TestCase;
+use Prophecy\Argument;
 use Symnedi\EventDispatcher\Event\ApplicationRequestEvent;
 use Symnedi\EventDispatcher\NetteApplicationEvents;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
@@ -26,18 +27,18 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$listener = Mockery::mock(FirewallHandlerInterface::class, [
-			'handle' => function () {
-				throw new ForbiddenRequestException;
-			}
-		]);
+		$listenerMock = $this->prophesize(FirewallHandlerInterface::class);
+		$listenerMock->handle(Argument::cetera())->willReturn(function() {
+			throw new ForbiddenRequestException;
+		});
 
-		$firewallMapMock = Mockery::mock(FirewallMapInterface::class, [
-			'getListeners' => [[$listener], '']
-		]);
+		$firewallMapMock = $this->prophesize(FirewallMapInterface::class);
+		$firewallMapMock->getListeners(Argument::type(Request::class))->willReturn(
+			[[$listenerMock->reveal()], '']
+		);
 
 		$request = new Request((new UrlScript)->setScriptPath('admin/script.php'));
-		$this->firewall = new FirewallSubscriber($firewallMapMock, $request);
+		$this->firewall = new FirewallSubscriber($firewallMapMock->reveal(), $request);
 	}
 
 
@@ -52,15 +53,16 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 
 	public function testOnRequest()
 	{
-		$applicationRequestEventMock = Mockery::mock(ApplicationRequestEvent::class, [
-			'getApplication' => Mockery::mock(Application::class),
-			'getRequest' => Mockery::mock(Request::class, [
-				'getParameters' => [
-					'parameter' => 'value'
-				]
-			])
-		]);
-		$this->firewall->onRequest($applicationRequestEventMock);
+		$applicationMock = $this->prophesize(Application::class);
+
+		$requestMock = $this->prophesize(ApplicationRequest::class);
+		$requestMock->getParameters()->willReturn(['parameter' => 'value']);
+
+		$applicationRequestEventMock = $this->prophesize(ApplicationRequestEvent::class);
+		$applicationRequestEventMock->getApplication()->willReturn($applicationMock->reveal());
+		$applicationRequestEventMock->getRequest()->willReturn($requestMock->reveal());
+
+		$this->firewall->onRequest($applicationRequestEventMock->reveal());
 	}
 
 }
