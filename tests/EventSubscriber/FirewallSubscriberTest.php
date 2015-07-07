@@ -28,7 +28,7 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		$listenerMock = $this->prophesize(FirewallHandlerInterface::class);
-		$listenerMock->handle(Argument::cetera())->willReturn(function() {
+		$listenerMock->handle(Argument::cetera())->willReturn(function () {
 			throw new ForbiddenRequestException;
 		});
 

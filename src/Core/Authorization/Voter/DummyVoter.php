@@ -19,7 +19,6 @@ class DummyVoter implements VoterInterface
 	 */
 	public function supportsAttribute($attribute)
 	{
-		return;
 	}
 
 
@@ -28,7 +27,6 @@ class DummyVoter implements VoterInterface
 	 */
 	public function supportsClass($class)
 	{
-		return;
 	}
 
 

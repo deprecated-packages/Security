@@ -8,8 +8,8 @@
 namespace Symnedi\Security\DI;
 
 use Nette\DI\CompilerExtension;
-use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;

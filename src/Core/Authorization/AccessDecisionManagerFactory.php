@@ -7,9 +7,9 @@
 
 namespace Symnedi\Security\Core\Authorization;
 
-use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 
 
 /**
