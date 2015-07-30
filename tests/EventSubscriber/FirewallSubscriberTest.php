@@ -9,7 +9,7 @@ use Nette\Http\Request;
 use Nette\Http\UrlScript;
 use PHPUnit_Framework_TestCase;
 use Prophecy\Argument;
-use Symnedi\EventDispatcher\Event\ApplicationRequestEvent;
+use Symnedi\EventDispatcher\Event\ApplicationPresenterEvent;
 use Symnedi\EventDispatcher\NetteApplicationEvents;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapInterface;
@@ -45,24 +45,23 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 	public function testGetSubscribedEvents()
 	{
 		$this->assertSame(
-			[NetteApplicationEvents::ON_REQUEST => 'onRequest'],
+			[NetteApplicationEvents::ON_PRESENTER => 'onPresenter'],
 			$this->firewall->getSubscribedEvents()
 		);
 	}
 
 
-	public function testOnRequest()
+	public function testOnPresenter()
 	{
 		$applicationMock = $this->prophesize(Application::class);
 
 		$requestMock = $this->prophesize(ApplicationRequest::class);
 		$requestMock->getParameters()->willReturn(['parameter' => 'value']);
 
-		$applicationRequestEventMock = $this->prophesize(ApplicationRequestEvent::class);
-		$applicationRequestEventMock->getApplication()->willReturn($applicationMock->reveal());
-		$applicationRequestEventMock->getRequest()->willReturn($requestMock->reveal());
+		$applicationPresenterEventMock = $this->prophesize(ApplicationPresenterEvent::class);
+		$applicationPresenterEventMock->getApplication()->willReturn($applicationMock->reveal());
 
-		$this->firewall->onRequest($applicationRequestEventMock->reveal());
+		$this->firewall->onPresenter($applicationPresenterEventMock->reveal());
 	}
 
 }

@@ -9,7 +9,7 @@ namespace Symnedi\Security\EventSubscriber;
 
 use Nette\Http\IRequest;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symnedi\EventDispatcher\Event\ApplicationRequestEvent;
+use Symnedi\EventDispatcher\Event\ApplicationPresenterEvent;
 use Symnedi\EventDispatcher\NetteApplicationEvents;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapInterface;
@@ -44,16 +44,16 @@ class FirewallSubscriber implements EventSubscriberInterface
 	 */
 	public static function getSubscribedEvents()
 	{
-		return [NetteApplicationEvents::ON_REQUEST => 'onRequest'];
+		return [NetteApplicationEvents::ON_PRESENTER => 'onPresenter'];
 	}
 
 
-	public function onRequest(ApplicationRequestEvent $applicationRequestEvent)
+	public function onPresenter(ApplicationPresenterEvent $applicationPresenterEvent)
 	{
 		/** @var FirewallHandlerInterface[] $listeners */
 		list($listeners) = $this->firewallMap->getListeners($this->request);
 		foreach ($listeners as $listener) {
-			$listener->handle($applicationRequestEvent->getApplication(), $this->request);
+			$listener->handle($applicationPresenterEvent->getApplication(), $this->request);
 		}
 	}
 
