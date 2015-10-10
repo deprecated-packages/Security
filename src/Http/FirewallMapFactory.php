@@ -12,7 +12,7 @@ use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
 
-class FirewallMapFactory implements FirewallMapFactoryInterface
+final class FirewallMapFactory implements FirewallMapFactoryInterface
 {
 
 	/**

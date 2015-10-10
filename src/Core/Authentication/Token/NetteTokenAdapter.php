@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symnedi\Security\Exception\NotImplementedException;
 
 
-class NetteTokenAdapter implements TokenInterface
+final class NetteTokenAdapter implements TokenInterface
 {
 
 	/**

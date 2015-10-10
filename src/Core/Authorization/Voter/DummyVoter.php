@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 
-class DummyVoter implements VoterInterface
+final class DummyVoter implements VoterInterface
 {
 
 	/**

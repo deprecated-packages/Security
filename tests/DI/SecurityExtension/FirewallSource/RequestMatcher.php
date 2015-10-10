@@ -6,7 +6,7 @@ use Nette\Http\IRequest;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
 
-class RequestMatcher implements RequestMatcherInterface
+final class RequestMatcher implements RequestMatcherInterface
 {
 
 	/**

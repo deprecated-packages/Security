@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  * Dummy implementation with no custom logic,
  * just to pass Token back.
  */
-class AuthenticationManager implements AuthenticationManagerInterface
+final class AuthenticationManager implements AuthenticationManagerInterface
 {
 
 	/**

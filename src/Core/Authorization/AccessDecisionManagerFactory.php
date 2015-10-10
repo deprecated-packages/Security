@@ -15,7 +15,7 @@ use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInt
 /**
  * Factory for @see AccessDecisionManager
  */
-class AccessDecisionManagerFactory implements AccessDecisionManagerFactoryInterface
+final class AccessDecisionManagerFactory implements AccessDecisionManagerFactoryInterface
 {
 
 	/**

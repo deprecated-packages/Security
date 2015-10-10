@@ -9,7 +9,7 @@ use Nette\Security\User;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 
 
-class FirewallHandler implements FirewallHandlerInterface
+final class FirewallHandler implements FirewallHandlerInterface
 {
 
 	/**

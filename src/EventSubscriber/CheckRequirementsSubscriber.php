@@ -13,7 +13,7 @@ use Symnedi\EventDispatcher\Event\ApplicationPresenterEvent;
 use Symnedi\EventDispatcher\NetteApplicationEvents;
 
 
-class CheckRequirementsSubscriber implements EventSubscriberInterface
+final class CheckRequirementsSubscriber implements EventSubscriberInterface
 {
 
 	/**

@@ -18,7 +18,7 @@ use Symnedi\Security\Contract\Http\FirewallMapInterface;
 /**
  * Mimics @see Symfony\Component\Security\Http\Firewall
  */
-class FirewallSubscriber implements EventSubscriberInterface
+final class FirewallSubscriber implements EventSubscriberInterface
 {
 
 	/**

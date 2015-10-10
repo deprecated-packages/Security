@@ -16,7 +16,7 @@ use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 /**
  * Mimics @see Symfony\Component\Security\Http\FirewallMap
  */
-class FirewallMap implements FirewallMapInterface
+final class FirewallMap implements FirewallMapInterface
 {
 
 	/**
