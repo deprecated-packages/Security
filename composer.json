@@ -19,6 +19,7 @@
 		"nette/application": "~2.3",
 		"nette/bootstrap": "~2.3",
 		"nette/robot-loader": "~2.3",
+		"phpunit/phpunit": "~4.8",
 		"tracy/tracy": "~2.3"
 	},
 	"autoload": {

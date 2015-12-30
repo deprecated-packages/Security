@@ -29,7 +29,6 @@ class SecurityExtension extends CompilerExtension
 	public function beforeCompile()
 	{
 		$containerBuilder = $this->getContainerBuilder();
-		$containerBuilder->prepareClassList();
 
 		$this->loadAccessDecisionManagerFactoryWithVoters();
 
