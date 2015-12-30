@@ -4,6 +4,7 @@ namespace Symnedi\Security\Tests\EventSubscriber;
 
 use Nette\Application\Application;
 use Nette\Application\ForbiddenRequestException;
+use Nette\Application\IPresenter;
 use Nette\Application\Request as ApplicationRequest;
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
@@ -53,15 +54,15 @@ class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
 
 	public function testOnPresenter()
 	{
-		$applicationMock = $this->prophesize(Application::class);
-
 		$requestMock = $this->prophesize(ApplicationRequest::class);
 		$requestMock->getParameters()->willReturn(['parameter' => 'value']);
 
-		$applicationPresenterEventMock = $this->prophesize(ApplicationPresenterEvent::class);
-		$applicationPresenterEventMock->getApplication()->willReturn($applicationMock->reveal());
+		$applicationPresenterEventMock = new ApplicationPresenterEvent(
+			$this->prophesize(Application::class)->reveal(),
+			$this->prophesize(IPresenter::class)->reveal()
+		);
 
-		$this->firewall->onPresenter($applicationPresenterEventMock->reveal());
+		$this->firewall->onPresenter($applicationPresenterEventMock);
 	}
 
 }
