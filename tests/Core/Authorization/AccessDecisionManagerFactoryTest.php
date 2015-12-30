@@ -24,13 +24,6 @@ class AccessDecisionManagerFactoryTest extends PHPUnit_Framework_TestCase
 	}
 
 
-	public function testAtLeastOneVoter()
-	{
-		$this->setExpectedException(InvalidArgumentException::class);
-		$this->accessDecisionManagerFactory->create();
-	}
-
-
 	public function testCreateWithOneVoter()
 	{
 		$voterMock = $this->prophesize(VoterInterface::class);
