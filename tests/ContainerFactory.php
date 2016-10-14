@@ -4,32 +4,30 @@ namespace Symnedi\Security\Tests;
 
 use Nette\Configurator;
 use Nette\DI\Container;
-use Tracy\Debugger;
+use Nette\Utils\FileSystem;
 
-
-class ContainerFactory
+final class ContainerFactory
 {
+    public function create() : Container
+    {
+        return $this->createWithConfig(__DIR__.'/config/default.neon');
+    }
 
-	/**
-	 * @return Container
-	 */
-	public function create()
-	{
-		return $this->createWithConfig(__DIR__ . '/config/default.neon');
-	}
+    public function createWithConfig(string $config) : Container
+    {
+        $configurator = new Configurator();
+        $configurator->setTempDirectory($this->createAndReturnTempDirectory());
+        $configurator->addConfig($config);
 
+        return $configurator->createContainer();
+    }
 
-	/**
-	 * @param string $config
-	 * @return Container
-	 */
-	public function createWithConfig($config)
-	{
-		$configurator = new Configurator;
-		$configurator->setTempDirectory(TEMP_DIR);
-		$configurator->setDebugMode(Debugger::PRODUCTION);
-		$configurator->addConfig($config);
-		return $configurator->createContainer();
-	}
+    private function createAndReturnTempDirectory() : string
+    {
+        $tempDir = sys_get_temp_dir().'/symnedi_security';
+        FileSystem::delete($tempDir);
+        FileSystem::createDir($tempDir);
 
+        return $tempDir;
+    }
 }

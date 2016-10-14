@@ -1,23 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symnedi\Security\Tests\Core\Authentication;
 
-use Mockery;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symnedi\Security\Core\Authentication\AuthenticationManager;
 
-
-class AuthenticationManagerTest extends PHPUnit_Framework_TestCase
+final class AuthenticationManagerTest extends TestCase
 {
+    public function testCase()
+    {
+        $tokenMock = $this->prophesize(TokenInterface::class);
+        $authenticationManager = new AuthenticationManager();
 
-	public function testCase()
-	{
-		$tokenMock = $this->prophesize(TokenInterface::class);
-		$authenticationManager = new AuthenticationManager;
-
-		$resolvedToken = $authenticationManager->authenticate($tokenMock->reveal());
-		$this->assertSame($resolvedToken, $tokenMock->reveal());
-	}
-
+        $resolvedToken = $authenticationManager->authenticate($tokenMock->reveal());
+        $this->assertSame($resolvedToken, $tokenMock->reveal());
+    }
 }

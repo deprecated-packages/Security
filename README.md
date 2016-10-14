@@ -3,21 +3,20 @@
 [![Build Status](https://img.shields.io/travis/Symnedi/Security.svg?style=flat-square)](https://travis-ci.org/Symnedi/Security)
 [![Quality Score](https://img.shields.io/scrutinizer/g/Symnedi/Security.svg?style=flat-square)](https://scrutinizer-ci.com/g/Symnedi/Security)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/Symnedi/Security.svg?style=flat-square)](https://scrutinizer-ci.com/g/Symnedi/Security)
-[![Downloads this Month](https://img.shields.io/packagist/dm/symnedi/security.svg?style=flat-square)](https://packagist.org/packages/symnedi/security)
+[![Downloads](https://img.shields.io/packagist/dt/symnedi/security.svg?style=flat-square)](htptps://packagist.org/packages/symnedi/security)
 [![Latest stable](https://img.shields.io/packagist/v/symnedi/security.svg?style=flat-square)](https://packagist.org/packages/symnedi/security)
 
 
 ## Install
 
-Via Composer:
-
 ```sh
-$ composer require symnedi/security
+composer require symnedi/security
 ```
 
-Register the extension in `config.neon`:
+Register the extension:
 
-```yaml
+```neon
+# app/config/config.neon
 extensions:
 	- Symnedi\Security\DI\SecurityExtension
 	- Symnedi\EventDispatcher\DI\EventDispatcherExtension
@@ -178,13 +177,18 @@ services:
 
 That's it!
 
-## Testing
-
-```sh
-$ phpunit
+```bash
+composer check-cs # see "scripts" section of composer.json for more details 
+vendor/bin/phpunit
 ```
 
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Rules are simple:
+
+- new feature needs tests
+- all tests must pass
+- 1 feature per PR
+
+We would be happy to merge your feature then!
