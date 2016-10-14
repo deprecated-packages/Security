@@ -1,38 +1,43 @@
 {
-	"name": "symnedi/security",
-	"description": "Voters and Firewall features from Symfony\\Security integration to Nette.",
-	"keywords": ["nette", "symfony", "security"],
-	"license": "MIT",
-	"authors": [
-		{ "name": "Tomáš Votruba", "homepage": "http://tomasvotruba.cz", "email": "tomas.vot@gmail.com" }
-	],
-	"require": {
-		"php": "^7.0",
-		"nette/di": "~2.3",
-		"nette/http": "~2.3",
-		"nette/security": "~2.3",
-		"symfony/security-core": "~2.7|~3.0",
-		"symfony/security-http": "~2.7|~3.0",
-		"symnedi/event-dispatcher": "~0.2"
-	},
-	"require-dev": {
-		"nette/application": "~2.3",
-		"nette/bootstrap": "~2.3",
-		"nette/robot-loader": "~2.3",
-		"phpunit/phpunit": "~5.5",
-		"tracy/tracy": "~2.3"
-	},
-	"autoload": {
-		"psr-4": {
-			"Symnedi\\Security\\": "src"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Symnedi\\Security\\Tests\\": "tests"
-		},
-		"classmap": [
-			"tests/DI/SecurityExtension/ListenerSource/HomepagePresenter.php"
-		]
-	}
+    "name": "symnedi/security",
+    "description": "Voters and Firewall features from Symfony\\Security integration to Nette.",
+    "keywords": ["nette", "symfony", "security"],
+    "license": "MIT",
+    "authors": [
+        { "name": "Tomáš Votruba", "homepage": "http://tomasvotruba.cz", "email": "tomas.vot@gmail.com" }
+    ],
+    "require": {
+        "php": "^7.0",
+        "nette/di": "~2.3",
+        "nette/http": "~2.3",
+        "nette/security": "~2.3",
+        "symfony/security-core": "~3.0",
+        "symfony/security-http": "~3.0",
+        "symnedi/event-dispatcher": "~0.2"
+    },
+    "require-dev": {
+        "nette/application": "~2.3",
+        "nette/bootstrap": "~2.3",
+        "nette/robot-loader": "~2.3",
+        "phpunit/phpunit": "~5.5",
+        "tracy/tracy": "~2.3",
+        "symplify/coding-standard": "^1.0.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Symnedi\\Security\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Symnedi\\Security\\Tests\\": "tests"
+        },
+        "classmap": [
+            "tests/DI/SecurityExtension/ListenerSource/HomepagePresenter.php"
+        ]
+    },
+    "script": {
+        "check-cs": "vendor/bin/symplify-cs check src tests",
+        "fix-cs": "vendor/bin/symplify-cs fix src tests"
+    }
 }
