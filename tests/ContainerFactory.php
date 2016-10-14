@@ -4,7 +4,6 @@ namespace Symnedi\Security\Tests;
 
 use Nette\Configurator;
 use Nette\DI\Container;
-use Tracy\Debugger;
 
 final class ContainerFactory
 {
@@ -17,7 +16,6 @@ final class ContainerFactory
     {
         $configurator = new Configurator();
         $configurator->setTempDirectory(TEMP_DIR);
-        $configurator->setDebugMode(Debugger::PRODUCTION);
         $configurator->addConfig($config);
 
         return $configurator->createContainer();

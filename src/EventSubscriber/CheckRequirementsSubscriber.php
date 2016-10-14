@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Symnedi\Security\EventSubscriber;
 
+use Nette\Application\UI\ComponentReflection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symnedi\EventDispatcher\Event\ApplicationPresenterEvent;
@@ -36,6 +37,9 @@ final class CheckRequirementsSubscriber implements EventSubscriberInterface
 
     public function onPresenter(ApplicationPresenterEvent $applicationPresenterEvent)
     {
-        $this->authorizationChecker->isGranted('access', $applicationPresenterEvent->getPresenter()->getReflection());
+        $this->authorizationChecker->isGranted(
+            'access',
+            new ComponentReflection($applicationPresenterEvent->getPresenter())
+        );
     }
 }
