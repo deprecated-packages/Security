@@ -15,7 +15,7 @@ composer require symnedi/security
 
 Register the extension:
 
-```neon
+```yaml
 # app/config/config.neon
 extensions:
 	- Symnedi\Security\DI\SecurityExtension
