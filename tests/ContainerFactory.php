@@ -24,9 +24,10 @@ final class ContainerFactory
 
     private function createAndReturnTempDirectory() : string
     {
-        $tempDir = sys_get_temp_dir() . '/symnedi_security';
+        $tempDir = sys_get_temp_dir().'/symnedi_security';
         FileSystem::delete($tempDir);
         FileSystem::createDir($tempDir);
+
         return $tempDir;
     }
 }
