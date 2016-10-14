@@ -2,14 +2,14 @@
 
 namespace Symnedi\Security\Tests\Http;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 use Symnedi\Security\Http\FirewallMapFactory;
 
-class FirewallMapFactoryTest extends PHPUnit_Framework_TestCase
+final class FirewallMapFactoryTest extends TestCase
 {
     public function testCreate()
     {

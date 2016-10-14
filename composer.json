@@ -31,10 +31,7 @@
     "autoload-dev": {
         "psr-4": {
             "Symnedi\\Security\\Tests\\": "tests"
-        },
-        "classmap": [
-            "tests/DI/SecurityExtension/ListenerSource/HomepagePresenter.php"
-        ]
+        }
     },
     "scripts": {
         "check-cs": "vendor/bin/symplify-cs check src tests",

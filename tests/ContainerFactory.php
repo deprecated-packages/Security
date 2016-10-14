@@ -6,22 +6,14 @@ use Nette\Configurator;
 use Nette\DI\Container;
 use Tracy\Debugger;
 
-class ContainerFactory
+final class ContainerFactory
 {
-    /**
-     * @return Container
-     */
-    public function create()
+    public function create() : Container
     {
         return $this->createWithConfig(__DIR__.'/config/default.neon');
     }
 
-    /**
-     * @param string $config
-     *
-     * @return Container
-     */
-    public function createWithConfig($config)
+    public function createWithConfig(string $config) : Container
     {
         $configurator = new Configurator();
         $configurator->setTempDirectory(TEMP_DIR);

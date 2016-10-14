@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory;
 use Symnedi\Security\Tests\DI\SecurityExtensionSource\SomeVoter;
 
-class SecurityExtensionTest extends AbstractSecurityExtensionTestCase
+final class SecurityExtensionTest extends AbstractSecurityExtensionTestCase
 {
     public function testLoadConfiguration()
     {

@@ -1,18 +1,15 @@
 <?php
 
-/*
- * This file is part of Symnedi.
- * Copyright (c) 2014 Tomas Votruba (http://tomasvotruba.cz)
- */
+declare(strict_types=1);
 
 namespace Symnedi\Security\Tests\DI;
 
 use Nette\DI\Compiler;
 use Nette\DI\ContainerBuilder;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symnedi\Security\DI\SecurityExtension;
 
-abstract class AbstractSecurityExtensionTestCase extends PHPUnit_Framework_TestCase
+abstract class AbstractSecurityExtensionTestCase extends TestCase
 {
     /**
      * @return SecurityExtension

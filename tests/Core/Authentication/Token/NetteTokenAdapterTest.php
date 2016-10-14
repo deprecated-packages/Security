@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symnedi\Security\Tests\Core\Authentication\Token;
 
 use Nette\Http\UserStorage;
 use Nette\Security\Identity;
 use Nette\Security\User;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter;
 use Symnedi\Security\Exception\NotImplementedException;
 
-class NetteTokenAdapterTest extends PHPUnit_Framework_TestCase
+final class NetteTokenAdapterTest extends TestCase
 {
     /**
      * @var NetteTokenAdapter

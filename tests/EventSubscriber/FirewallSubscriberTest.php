@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symnedi\Security\Tests\EventSubscriber;
 
 use Nette\Application\Application;
@@ -8,7 +10,7 @@ use Nette\Application\IPresenter;
 use Nette\Application\Request as ApplicationRequest;
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symnedi\EventDispatcher\Event\ApplicationPresenterEvent;
 use Symnedi\EventDispatcher\NetteApplicationEvents;
@@ -16,7 +18,7 @@ use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapInterface;
 use Symnedi\Security\EventSubscriber\FirewallSubscriber;
 
-class FirewallSubscriberTest extends PHPUnit_Framework_TestCase
+final class FirewallSubscriberTest extends TestCase
 {
     /**
      * @var FirewallSubscriber

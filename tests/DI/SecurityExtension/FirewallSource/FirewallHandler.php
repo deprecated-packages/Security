@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symnedi\Security\Tests\DI\SecurityExtension\FirewallSource;
 
 use Nette\Application\AbortException;

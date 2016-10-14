@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symnedi\Security\Tests\Core\Authentication;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symnedi\Security\Core\Authentication\AuthenticationManager;
 
-class AuthenticationManagerTest extends PHPUnit_Framework_TestCase
+final class AuthenticationManagerTest extends TestCase
 {
     public function testCase()
     {
