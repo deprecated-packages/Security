@@ -9,15 +9,14 @@
 
 ## Install
 
-Via Composer:
-
 ```sh
-$ composer require symnedi/security
+composer require symnedi/security
 ```
 
-Register the extension in `config.neon`:
+Register the extension:
 
-```yaml
+```neon
+// app/config/config.neon
 extensions:
 	- Symnedi\Security\DI\SecurityExtension
 	- Symnedi\EventDispatcher\DI\EventDispatcherExtension
@@ -178,13 +177,18 @@ services:
 
 That's it!
 
-## Testing
-
-```sh
-$ phpunit
+```bash
+composer check-cs # see "scripts" section of composer.json for more details 
+vendor/bin/phpunit
 ```
 
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Rules are simple:
+
+- new feature needs tests
+- all tests must pass
+- 1 feature per PR
+
+We would be happy to merge your feature then!

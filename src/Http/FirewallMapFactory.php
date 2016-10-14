@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of Symnedi.
@@ -14,42 +14,37 @@ use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\Http\FirewallMapInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
-
 final class FirewallMapFactory implements FirewallMapFactoryInterface
 {
+    /**
+     * @var RequestMatcherInterface[]
+     */
+    private $requestMatchers = [];
 
-	/**
-	 * @var RequestMatcherInterface[]
-	 */
-	private $requestMatchers = [];
+    /**
+     * @var FirewallHandlerInterface[][]
+     */
+    private $firewallHandlers = [];
 
-	/**
-	 * @var FirewallHandlerInterface[][]
-	 */
-	private $firewallHandlers = [];
+    public function addRequestMatcher(RequestMatcherInterface $requestMatcher)
+    {
+        $this->requestMatchers[$requestMatcher->getFirewallName()] = $requestMatcher;
+    }
 
+    public function addFirewallHandler(FirewallHandlerInterface $firewallHandler)
+    {
+        $this->firewallHandlers[$firewallHandler->getFirewallName()][] = $firewallHandler;
+    }
 
-	public function addRequestMatcher(RequestMatcherInterface $requestMatcher)
-	{
-		$this->requestMatchers[$requestMatcher->getFirewallName()] = $requestMatcher;
-	}
+    public function create() : FirewallMapInterface
+    {
+        $firewallMap = new FirewallMap();
+        foreach ($this->requestMatchers as $firewallName => $requestMatcher) {
+            if (isset($this->firewallHandlers[$firewallName])) {
+                $firewallMap->add($requestMatcher, $this->firewallHandlers[$firewallName]);
+            }
+        }
 
-
-	public function addFirewallHandler(FirewallHandlerInterface $firewallHandler)
-	{
-		$this->firewallHandlers[$firewallHandler->getFirewallName()][] = $firewallHandler;
-	}
-
-
-	public function create() : FirewallMapInterface
-	{
-		$firewallMap = new FirewallMap;
-		foreach ($this->requestMatchers as $firewallName => $requestMatcher) {
-			if (isset($this->firewallHandlers[$firewallName])) {
-				$firewallMap->add($requestMatcher, $this->firewallHandlers[$firewallName]);
-			}
-		}
-		return $firewallMap;
-	}
-
+        return $firewallMap;
+    }
 }

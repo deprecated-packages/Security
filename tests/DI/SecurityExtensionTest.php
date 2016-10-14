@@ -11,45 +11,41 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symnedi\Security\Core\Authorization\AccessDecisionManagerFactory;
 use Symnedi\Security\Tests\DI\SecurityExtensionSource\SomeVoter;
 
-
 class SecurityExtensionTest extends AbstractSecurityExtensionTestCase
 {
+    public function testLoadConfiguration()
+    {
+        $extension = $this->getExtension();
+        $extension->loadConfiguration();
 
-	public function testLoadConfiguration()
-	{
-		$extension = $this->getExtension();
-		$extension->loadConfiguration();
+        $containerBuilder = $extension->getContainerBuilder();
+        $containerBuilder->prepareClassList();
 
-		$containerBuilder = $extension->getContainerBuilder();
-		$containerBuilder->prepareClassList();
+        $accessDecisionManagerDefinition = $containerBuilder->getDefinition(
+            $containerBuilder->getByType(AccessDecisionManager::class)
+        );
+        $this->assertSame(AccessDecisionManager::class, $accessDecisionManagerDefinition->getClass());
+    }
 
-		$accessDecisionManagerDefinition = $containerBuilder->getDefinition(
-			$containerBuilder->getByType(AccessDecisionManager::class)
-		);
-		$this->assertSame(AccessDecisionManager::class, $accessDecisionManagerDefinition->getClass());
-	}
+    public function testLoadVoters()
+    {
+        $extension = $this->getExtension();
+        $containerBuilder = $extension->getContainerBuilder();
 
+        $extension->loadConfiguration();
 
-	public function testLoadVoters()
-	{
-		$extension = $this->getExtension();
-		$containerBuilder = $extension->getContainerBuilder();
+        $containerBuilder->addDefinition('someVoter')
+            ->setClass(SomeVoter::class);
+        $containerBuilder->prepareClassList();
 
-		$extension->loadConfiguration();
+        $accessDecisionManagerFactoryDefinition = $containerBuilder->getDefinition(
+            $containerBuilder->getByType(AccessDecisionManagerFactory::class)
+        );
 
-		$containerBuilder->addDefinition('someVoter')
-			->setClass(SomeVoter::class);
-		$containerBuilder->prepareClassList();
+        $this->assertCount(0, $accessDecisionManagerFactoryDefinition->getSetup());
 
-		$accessDecisionManagerFactoryDefinition = $containerBuilder->getDefinition(
-			$containerBuilder->getByType(AccessDecisionManagerFactory::class)
-		);
+        $extension->beforeCompile();
 
-		$this->assertCount(0, $accessDecisionManagerFactoryDefinition->getSetup());
-
-		$extension->beforeCompile();
-
-		$this->assertCount(2, $accessDecisionManagerFactoryDefinition->getSetup());
-	}
-
+        $this->assertCount(2, $accessDecisionManagerFactoryDefinition->getSetup());
+    }
 }

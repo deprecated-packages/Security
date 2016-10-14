@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of Symnedi.
@@ -17,52 +17,45 @@ use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapFactoryInterface;
 use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
-
 final class SecurityExtension extends CompilerExtension
 {
-
-	public function loadConfiguration()
-	{
+    public function loadConfiguration()
+    {
         Compiler::loadDefinitions(
             $this->getContainerBuilder(),
-            $this->loadFromFile(__DIR__ . '/services.neon')['services']
+            $this->loadFromFile(__DIR__.'/services.neon')['services']
         );
-	}
+    }
 
+    public function beforeCompile()
+    {
+        $containerBuilder = $this->getContainerBuilder();
 
-	public function beforeCompile()
-	{
-		$containerBuilder = $this->getContainerBuilder();
+        $this->loadAccessDecisionManagerFactoryWithVoters();
 
-		$this->loadAccessDecisionManagerFactoryWithVoters();
+        if ($containerBuilder->findByType(FirewallHandlerInterface::class)) {
+            $this->loadFirewallMap();
+        }
+    }
 
-		if ($containerBuilder->findByType(FirewallHandlerInterface::class)) {
-			$this->loadFirewallMap();
-		}
-	}
+    private function loadAccessDecisionManagerFactoryWithVoters()
+    {
+        $this->loadMediator(AccessDecisionManagerFactoryInterface::class, VoterInterface::class, 'addVoter');
+    }
 
+    private function loadFirewallMap()
+    {
+        $this->loadMediator(FirewallMapFactoryInterface::class, FirewallHandlerInterface::class, 'addFirewallHandler');
+        $this->loadMediator(FirewallMapFactoryInterface::class, RequestMatcherInterface::class, 'addRequestMatcher');
+    }
 
-	private function loadAccessDecisionManagerFactoryWithVoters()
-	{
-		$this->loadMediator(AccessDecisionManagerFactoryInterface::class, VoterInterface::class, 'addVoter');
-	}
+    private function loadMediator(string $mediatorClass, string $colleagueClass, string $adderMethod)
+    {
+        $containerBuilder = $this->getContainerBuilder();
 
-
-	private function loadFirewallMap()
-	{
-		$this->loadMediator(FirewallMapFactoryInterface::class, FirewallHandlerInterface::class, 'addFirewallHandler');
-		$this->loadMediator(FirewallMapFactoryInterface::class, RequestMatcherInterface::class, 'addRequestMatcher');
-	}
-
-
-	private function loadMediator(string $mediatorClass, string $colleagueClass, string $adderMethod)
-	{
-		$containerBuilder = $this->getContainerBuilder();
-
-		$mediatorDefinition = $containerBuilder->getDefinition($containerBuilder->getByType($mediatorClass));
-		foreach ($containerBuilder->findByType($colleagueClass) as $colleagueDefinition) {
-			$mediatorDefinition->addSetup($adderMethod, ['@' . $colleagueDefinition->getClass()]);
-		}
-	}
-
+        $mediatorDefinition = $containerBuilder->getDefinition($containerBuilder->getByType($mediatorClass));
+        foreach ($containerBuilder->findByType($colleagueClass) as $colleagueDefinition) {
+            $mediatorDefinition->addSetup($adderMethod, ['@'.$colleagueDefinition->getClass()]);
+        }
+    }
 }

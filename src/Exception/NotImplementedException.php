@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of Symnedi.
@@ -11,8 +11,6 @@ namespace Symnedi\Security\Exception;
 
 use LogicException;
 
-
 final class NotImplementedException extends LogicException
 {
-
 }

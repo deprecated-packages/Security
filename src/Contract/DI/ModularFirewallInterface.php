@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of Symnedi.
@@ -9,10 +9,7 @@ declare (strict_types = 1);
 
 namespace Symnedi\Security\Contract\DI;
 
-
 interface ModularFirewallInterface
 {
-
-	public function getFirewallName() : string;
-
+    public function getFirewallName() : string;
 }

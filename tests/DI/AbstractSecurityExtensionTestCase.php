@@ -12,18 +12,16 @@ use Nette\DI\ContainerBuilder;
 use PHPUnit_Framework_TestCase;
 use Symnedi\Security\DI\SecurityExtension;
 
-
 abstract class AbstractSecurityExtensionTestCase extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @return SecurityExtension
+     */
+    protected function getExtension()
+    {
+        $extension = new SecurityExtension();
+        $extension->setCompiler(new Compiler(new ContainerBuilder()), 'compiler');
 
-	/**
-	 * @return SecurityExtension
-	 */
-	protected function getExtension()
-	{
-		$extension = new SecurityExtension;
-		$extension->setCompiler(new Compiler(new ContainerBuilder), 'compiler');
-		return $extension;
-	}
-
+        return $extension;
+    }
 }

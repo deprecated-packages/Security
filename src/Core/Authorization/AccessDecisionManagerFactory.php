@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of Symnedi.
@@ -14,34 +14,29 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 
-
 /**
- * Factory for @see AccessDecisionManager
+ * Factory for @see AccessDecisionManager.
  */
 final class AccessDecisionManagerFactory implements AccessDecisionManagerFactoryInterface
 {
+    /**
+     * @var VoterInterface[]
+     */
+    private $voters = [];
 
-	/**
-	 * @var VoterInterface[]
-	 */
-	private $voters = [];
+    /**
+     * {@inheritdoc}
+     */
+    public function addVoter(VoterInterface $voter)
+    {
+        $this->voters[] = $voter;
+    }
 
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function addVoter(VoterInterface $voter)
-	{
-		$this->voters[] = $voter;
-	}
-
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function create() : AccessDecisionManagerInterface
-	{
-		return new AccessDecisionManager($this->voters, AccessDecisionManager::STRATEGY_UNANIMOUS, TRUE);
-	}
-
+    /**
+     * {@inheritdoc}
+     */
+    public function create() : AccessDecisionManagerInterface
+    {
+        return new AccessDecisionManager($this->voters, AccessDecisionManager::STRATEGY_UNANIMOUS, true);
+    }
 }

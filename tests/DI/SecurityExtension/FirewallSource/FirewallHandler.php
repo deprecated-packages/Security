@@ -8,40 +8,34 @@ use Nette\Http\IRequest;
 use Nette\Security\User;
 use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 
-
 final class FirewallHandler implements FirewallHandlerInterface
 {
+    /**
+     * @var User
+     */
+    private $user;
 
-	/**
-	 * @var User
-	 */
-	private $user;
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
 
+    public function getFirewallName() : string
+    {
+        return 'adminFirewall';
+    }
 
-	public function __construct(User $user)
-	{
-		$this->user = $user;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(Application $application, IRequest $request)
+    {
+        if (!$this->user->isLoggedIn()) {
+            throw new AbortException();
+        }
 
-
-	public function getFirewallName() : string
-	{
-		return 'adminFirewall';
-	}
-
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function handle(Application $application, IRequest $request)
-	{
-		if ( ! $this->user->isLoggedIn()) {
-			throw new AbortException;
-		}
-
-		if ( ! $this->user->isInRole('admin')) {
-			throw new AbortException;
-		}
-	}
-
+        if (!$this->user->isInRole('admin')) {
+            throw new AbortException();
+        }
+    }
 }

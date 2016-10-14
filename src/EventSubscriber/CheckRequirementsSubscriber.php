@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of Symnedi.
@@ -14,34 +14,28 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symnedi\EventDispatcher\Event\ApplicationPresenterEvent;
 use Symnedi\EventDispatcher\NetteApplicationEvents;
 
-
 final class CheckRequirementsSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
 
-	/**
-	 * @var AuthorizationCheckerInterface
-	 */
-	private $authorizationChecker;
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [NetteApplicationEvents::ON_PRESENTER => 'onPresenter'];
+    }
 
-	public function __construct(AuthorizationCheckerInterface $authorizationChecker)
-	{
-		$this->authorizationChecker = $authorizationChecker;
-	}
-
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function getSubscribedEvents()
-	{
-		return [NetteApplicationEvents::ON_PRESENTER => 'onPresenter'];
-	}
-
-
-	public function onPresenter(ApplicationPresenterEvent $applicationPresenterEvent)
-	{
-		$this->authorizationChecker->isGranted('access', $applicationPresenterEvent->getPresenter()->getReflection());
-	}
-
+    public function onPresenter(ApplicationPresenterEvent $applicationPresenterEvent)
+    {
+        $this->authorizationChecker->isGranted('access', $applicationPresenterEvent->getPresenter()->getReflection());
+    }
 }
