@@ -16,7 +16,7 @@ composer require symnedi/security
 Register the extension:
 
 ```neon
-// app/config/config.neon
+# app/config/config.neon
 extensions:
 	- Symnedi\Security\DI\SecurityExtension
 	- Symnedi\EventDispatcher\DI\EventDispatcherExtension
