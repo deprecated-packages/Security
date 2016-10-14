@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare (strict_types = 1);
+
+/*
  * This file is part of Symnedi.
  * Copyright (c) 2014 Tomas Votruba (http://tomasvotruba.cz)
  */
@@ -19,11 +21,7 @@ interface RequestMatcherInterface extends ModularFirewallInterface
 
 	/**
 	 * Decides whether the rule(s) implemented by the strategy matches the supplied request.
-	 *
-	 * @param IRequest $request The request to check for a match
-	 *
-	 * @return bool true if the request matches, false otherwise
 	 */
-	function matches(IRequest $request);
+	public function matches(IRequest $request) : bool;
 
 }

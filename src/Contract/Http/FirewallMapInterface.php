@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare (strict_types = 1);
+
+/*
  * This file is part of Symnedi.
  * Copyright (c) 2014 Tomas Votruba (http://tomasvotruba.cz)
  */
@@ -18,12 +20,7 @@ use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 interface FirewallMapInterface
 {
 
-	/**
-	 * @param RequestMatcherInterface $requestMatcher
-	 * @param array $listeners
-	 * @param ExceptionListener $exceptionListener
-	 */
-	function add(
+	public function add(
 		RequestMatcherInterface $requestMatcher = NULL,
 		array $listeners = [],
 		ExceptionListener $exceptionListener = NULL
@@ -39,10 +36,8 @@ interface FirewallMapInterface
 	 * If there is no exception listener, the second element of the outer array
 	 * must be null.
 	 *
-	 * @param IRequest $request
-	 *
 	 * @return array of the format array(array(AuthenticationListener), ExceptionListener)
 	 */
-	function getListeners(IRequest $request);
+	public function getListeners(IRequest $request) : array;
 
 }

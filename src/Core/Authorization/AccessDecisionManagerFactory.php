@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare (strict_types = 1);
+
+/*
  * This file is part of Symnedi.
  * Copyright (c) 2014 Tomas Votruba (http://tomasvotruba.cz)
  */
@@ -8,6 +10,7 @@
 namespace Symnedi\Security\Core\Authorization;
 
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symnedi\Security\Contract\Core\Authorization\AccessDecisionManagerFactoryInterface;
 
@@ -36,7 +39,7 @@ final class AccessDecisionManagerFactory implements AccessDecisionManagerFactory
 	/**
 	 * {@inheritdoc}
 	 */
-	public function create()
+	public function create() : AccessDecisionManagerInterface
 	{
 		return new AccessDecisionManager($this->voters, AccessDecisionManager::STRATEGY_UNANIMOUS, TRUE);
 	}

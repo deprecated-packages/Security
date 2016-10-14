@@ -1,9 +1,8 @@
 language: php
 
 php:
-  - 5.6
   - 7.0
-  - hhvm
+  - 7.1
 
 install:
   - composer create-project --prefer-source --dev --no-interaction zenify/ci vendor/ci @dev
@@ -14,7 +13,7 @@ before_script:
   - . vendor/ci/travis/static-analysis.sh
 
 script:
-  - phpunit $PHPUNIT_FLAGS
+  - vendor/bin/phpunit $PHPUNIT_FLAGS
 
 after_script:
   - . vendor/ci/travis/coverage-send.sh

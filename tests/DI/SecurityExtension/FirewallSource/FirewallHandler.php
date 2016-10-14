@@ -24,10 +24,7 @@ final class FirewallHandler implements FirewallHandlerInterface
 	}
 
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getFirewallName()
+	public function getFirewallName() : string
 	{
 		return 'adminFirewall';
 	}

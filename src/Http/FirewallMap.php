@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare (strict_types = 1);
+
+/*
  * This file is part of Symnedi.
  * Copyright (c) 2014 Tomas Votruba (http://tomasvotruba.cz)
  */
@@ -14,7 +16,7 @@ use Symnedi\Security\Contract\HttpFoundation\RequestMatcherInterface;
 
 
 /**
- * Mimics @see Symfony\Component\Security\Http\FirewallMap
+ * Mimics @see \Symfony\Component\Security\Http\FirewallMap
  */
 final class FirewallMap implements FirewallMapInterface
 {
@@ -25,9 +27,6 @@ final class FirewallMap implements FirewallMapInterface
 	private $map = [];
 
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function add(
 		RequestMatcherInterface $requestMatcher = NULL,
 		array $listeners = [],
@@ -37,10 +36,7 @@ final class FirewallMap implements FirewallMapInterface
 	}
 
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getListeners(IRequest $request)
+	public function getListeners(IRequest $request) : array
 	{
 		foreach ($this->map as $elements) {
 			if ($elements[0] === NULL || $elements[0]->matches($request)) {
