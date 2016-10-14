@@ -9,7 +9,6 @@ use Nette\Security\Identity;
 use Nette\Security\User;
 use PHPUnit\Framework\TestCase;
 use Symnedi\Security\Core\Authentication\Token\NetteTokenAdapter;
-use Symnedi\Security\Exception\NotImplementedException;
 
 final class NetteTokenAdapterTest extends TestCase
 {
@@ -59,62 +58,80 @@ final class NetteTokenAdapterTest extends TestCase
         $this->netteTokenAdapter->setAuthenticated('...');
     }
 
-    public function testToString()
-    {
-        $this->setExpectedException(NotImplementedException::class);
-        $this->netteTokenAdapter->__toString();
-    }
-
-    public function testSerialize()
-    {
-        $this->setExpectedException(NotImplementedException::class);
-        $this->netteTokenAdapter->serialize();
-    }
-
-    public function testUnserialize()
-    {
-        $this->setExpectedException(NotImplementedException::class);
-        $this->netteTokenAdapter->unserialize('...');
-    }
-
-    public function testGetUsername()
-    {
-        $this->setExpectedException(NotImplementedException::class);
-        $this->netteTokenAdapter->getUsername();
-    }
-
-    public function testEraseCredentials()
-    {
-        $this->setExpectedException(NotImplementedException::class);
-        $this->netteTokenAdapter->eraseCredentials();
-    }
-
     public function testGetAttributes()
     {
         $this->assertSame('attributes', $this->netteTokenAdapter->getAttributes());
     }
 
+    /**
+     * @expectedException \Symnedi\Security\Exception\NotImplementedException
+     */
+    public function testToString()
+    {
+        $this->netteTokenAdapter->__toString();
+    }
+
+    /**
+     * @expectedException \Symnedi\Security\Exception\NotImplementedException
+     */
+    public function testSerialize()
+    {
+        $this->netteTokenAdapter->serialize();
+    }
+
+    /**
+     * @expectedException \Symnedi\Security\Exception\NotImplementedException
+     */
+    public function testUnserialize()
+    {
+        $this->netteTokenAdapter->unserialize('...');
+    }
+
+    /**
+     * @expectedException \Symnedi\Security\Exception\NotImplementedException
+     */
+    public function testGetUsername()
+    {
+        $this->netteTokenAdapter->getUsername();
+    }
+
+    /**
+     * @expectedException \Symnedi\Security\Exception\NotImplementedException
+     */
+    public function testEraseCredentials()
+    {
+        $this->netteTokenAdapter->eraseCredentials();
+    }
+
+    /**
+     * @expectedException \Symnedi\Security\Exception\NotImplementedException
+     */
     public function testSetAttributes()
     {
-        $this->setExpectedException(NotImplementedException::class);
         $this->netteTokenAdapter->setAttributes(['someKey' => 'someValue']);
     }
 
+    /**
+     * @expectedException \Symnedi\Security\Exception\NotImplementedException
+     */
     public function testHasAttribute()
     {
-        $this->setExpectedException(NotImplementedException::class);
         $this->netteTokenAdapter->hasAttribute('someKey');
     }
 
+    /**
+     * @expectedException \Symnedi\Security\Exception\NotImplementedException
+     */
     public function testGetAttribute()
     {
-        $this->setExpectedException(NotImplementedException::class);
         $this->netteTokenAdapter->getAttribute('someKey');
     }
 
+    /**
+     * @expectedException \Symnedi\Security\Exception\NotImplementedException
+     */
     public function testSetAttribute()
     {
-        $this->setExpectedException(NotImplementedException::class);
         $this->netteTokenAdapter->setAttribute('someKey', 'someValue');
     }
 }

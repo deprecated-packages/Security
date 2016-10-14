@@ -18,9 +18,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 final class AuthenticationManager implements AuthenticationManagerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function authenticate(TokenInterface $token)
     {
         return $token;

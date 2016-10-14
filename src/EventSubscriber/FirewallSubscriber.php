@@ -17,7 +17,7 @@ use Symnedi\Security\Contract\Http\FirewallHandlerInterface;
 use Symnedi\Security\Contract\Http\FirewallMapInterface;
 
 /**
- * Mimics @see Symfony\Component\Security\Http\Firewall.
+ * Mimics @see \Symfony\Component\Security\Http\Firewall.
  */
 final class FirewallSubscriber implements EventSubscriberInterface
 {
@@ -37,12 +37,11 @@ final class FirewallSubscriber implements EventSubscriberInterface
         $this->request = $request;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
-        return [NetteApplicationEvents::ON_PRESENTER => 'onPresenter'];
+        return [
+            NetteApplicationEvents::ON_PRESENTER => 'onPresenter',
+        ];
     }
 
     public function onPresenter(ApplicationPresenterEvent $applicationPresenterEvent)

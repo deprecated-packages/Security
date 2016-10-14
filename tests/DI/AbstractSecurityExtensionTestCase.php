@@ -11,10 +11,7 @@ use Symnedi\Security\DI\SecurityExtension;
 
 abstract class AbstractSecurityExtensionTestCase extends TestCase
 {
-    /**
-     * @return SecurityExtension
-     */
-    protected function getExtension()
+    protected function getExtension() : SecurityExtension
     {
         $extension = new SecurityExtension();
         $extension->setCompiler(new Compiler(new ContainerBuilder()), 'compiler');

@@ -21,48 +21,33 @@ final class NetteTokenAdapter implements TokenInterface
      */
     private $user;
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize()
     {
         throw new NotImplementedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unserialize($serialized)
     {
         throw new NotImplementedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString()
     {
         throw new NotImplementedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRoles()
     {
         return $this->user->getRoles();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCredentials()
     {
         return $this->user->getIdentity();
     }
 
     /**
-     * {@inheritdoc}
+     * @return User
      */
     public function getUser()
     {
@@ -70,48 +55,33 @@ final class NetteTokenAdapter implements TokenInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param User $user
      */
     public function setUser($user)
     {
         $this->user = $user;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUsername()
     {
         throw new NotImplementedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isAuthenticated()
     {
         return $this->user->isLoggedIn();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAuthenticated($isAuthenticated)
     {
         $this->user->getStorage()->setAuthenticated($isAuthenticated);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function eraseCredentials()
     {
         throw new NotImplementedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAttributes()
     {
         /** @var Identity $identity */
@@ -120,33 +90,21 @@ final class NetteTokenAdapter implements TokenInterface
         return $identity->getData();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAttributes(array $attributes)
     {
         throw new NotImplementedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasAttribute($name)
     {
         throw new NotImplementedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAttribute($name)
     {
         throw new NotImplementedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAttribute($name, $value)
     {
         throw new NotImplementedException();

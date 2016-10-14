@@ -7,23 +7,6 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 final class SomeVoter implements VoterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsAttribute($attribute)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsClass($class)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
     }

@@ -27,12 +27,11 @@ final class CheckRequirementsSubscriber implements EventSubscriberInterface
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
-        return [NetteApplicationEvents::ON_PRESENTER => 'onPresenter'];
+        return [
+            NetteApplicationEvents::ON_PRESENTER => 'onPresenter',
+        ];
     }
 
     public function onPresenter(ApplicationPresenterEvent $applicationPresenterEvent)

@@ -24,17 +24,11 @@ final class AccessDecisionManagerFactory implements AccessDecisionManagerFactory
      */
     private $voters = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function addVoter(VoterInterface $voter)
     {
         $this->voters[] = $voter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create() : AccessDecisionManagerInterface
     {
         return new AccessDecisionManager($this->voters, AccessDecisionManager::STRATEGY_UNANIMOUS, true);

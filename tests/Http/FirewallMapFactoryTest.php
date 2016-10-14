@@ -18,10 +18,7 @@ final class FirewallMapFactoryTest extends TestCase
         $this->assertInstanceOf(FirewallMapInterface::class, $firewallMap);
     }
 
-    /**
-     * @return FirewallMapFactoryInterface
-     */
-    private function createLoadedFirewallMapFactory()
+    private function createLoadedFirewallMapFactory() : FirewallMapFactoryInterface
     {
         $firewallMapFactory = new FirewallMapFactory();
 

@@ -27,9 +27,6 @@ final class FirewallHandler implements FirewallHandlerInterface
         return 'adminFirewall';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(Application $application, IRequest $request)
     {
         if (!$this->user->isLoggedIn()) {
