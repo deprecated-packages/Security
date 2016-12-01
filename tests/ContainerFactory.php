@@ -10,7 +10,7 @@ final class ContainerFactory
 {
     public function create() : Container
     {
-        return $this->createWithConfig(__DIR__.'/config/default.neon');
+        return $this->createWithConfig(__DIR__ . '/config/default.neon');
     }
 
     public function createWithConfig(string $config) : Container
@@ -24,7 +24,7 @@ final class ContainerFactory
 
     private function createAndReturnTempDirectory() : string
     {
-        $tempDir = sys_get_temp_dir().'/symnedi_security';
+        $tempDir = sys_get_temp_dir() . '/symnedi_security';
         FileSystem::delete($tempDir);
         FileSystem::createDir($tempDir);
 

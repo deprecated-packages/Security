@@ -23,7 +23,7 @@ final class SecurityExtension extends CompilerExtension
     {
         Compiler::loadDefinitions(
             $this->getContainerBuilder(),
-            $this->loadFromFile(__DIR__.'/services.neon')['services']
+            $this->loadFromFile(__DIR__ . '/services.neon')['services']
         );
     }
 
@@ -55,7 +55,7 @@ final class SecurityExtension extends CompilerExtension
 
         $mediatorDefinition = $containerBuilder->getDefinition($containerBuilder->getByType($mediatorClass));
         foreach ($containerBuilder->findByType($colleagueClass) as $colleagueDefinition) {
-            $mediatorDefinition->addSetup($adderMethod, ['@'.$colleagueDefinition->getClass()]);
+            $mediatorDefinition->addSetup($adderMethod, ['@' . $colleagueDefinition->getClass()]);
         }
     }
 }
