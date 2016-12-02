@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Symnedi\Security\Core\Authentication\Token;
 
 use Nette\Security\Identity;
+use Nette\Security\IIdentity;
 use Nette\Security\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symnedi\Security\Exception\NotImplementedException;
@@ -26,6 +27,9 @@ final class NetteTokenAdapter implements TokenInterface
         throw new NotImplementedException();
     }
 
+    /**
+     * @param string $serialized
+     */
     public function unserialize($serialized)
     {
         throw new NotImplementedException();
@@ -36,11 +40,14 @@ final class NetteTokenAdapter implements TokenInterface
         throw new NotImplementedException();
     }
 
-    public function getRoles()
+    public function getRoles() : array
     {
         return $this->user->getRoles();
     }
 
+    /**
+     * @return IIdentity|null
+     */
     public function getCredentials()
     {
         return $this->user->getIdentity();
@@ -62,16 +69,22 @@ final class NetteTokenAdapter implements TokenInterface
         $this->user = $user;
     }
 
+    /**
+     * @return void
+     */
     public function getUsername()
     {
         throw new NotImplementedException();
     }
 
-    public function isAuthenticated()
+    public function isAuthenticated() : bool
     {
         return $this->user->isLoggedIn();
     }
 
+    /**
+     * @param bool $isAuthenticated
+     */
     public function setAuthenticated($isAuthenticated)
     {
         $this->user->getStorage()->setAuthenticated($isAuthenticated);
@@ -82,7 +95,7 @@ final class NetteTokenAdapter implements TokenInterface
         throw new NotImplementedException();
     }
 
-    public function getAttributes()
+    public function getAttributes() : array
     {
         /** @var Identity $identity */
         $identity = $this->user->getIdentity();
@@ -95,16 +108,26 @@ final class NetteTokenAdapter implements TokenInterface
         throw new NotImplementedException();
     }
 
-    public function hasAttribute($name)
+    /**
+     * @param string $name
+     */
+    public function hasAttribute($name) : bool
     {
-        throw new NotImplementedException();
+        return false;
     }
 
-    public function getAttribute($name)
+    /**
+     * @param string $name
+     */
+    public function getAttribute($name) : null
     {
-        throw new NotImplementedException();
+        return null;
     }
 
+    /**
+     * @param string $name
+     * @param mixed $value
+     */
     public function setAttribute($name, $value)
     {
         throw new NotImplementedException();

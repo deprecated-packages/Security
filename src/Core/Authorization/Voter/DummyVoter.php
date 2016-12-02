@@ -14,7 +14,12 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 final class DummyVoter implements VoterInterface
 {
-    public function vote(TokenInterface $token, $object, array $attributes)
+    /**
+     * @param TokenInterface $token
+     * @param mixed $object
+     * @param array $attributes
+     */
+    public function vote(TokenInterface $token, $object, array $attributes) : int
     {
         return self::ACCESS_ABSTAIN;
     }
