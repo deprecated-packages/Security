@@ -177,6 +177,9 @@ services:
 
 That's it!
 
+
+## Testing
+
 ```bash
 composer check-cs # see "scripts" section of composer.json for more details 
 vendor/bin/phpunit
