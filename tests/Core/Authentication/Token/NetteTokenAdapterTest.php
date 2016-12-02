@@ -60,7 +60,7 @@ final class NetteTokenAdapterTest extends TestCase
 
     public function testGetAttributes()
     {
-        $this->assertSame('attributes', $this->netteTokenAdapter->getAttributes());
+        $this->assertSame(['attributes'], $this->netteTokenAdapter->getAttributes());
     }
 
     /**
@@ -87,12 +87,9 @@ final class NetteTokenAdapterTest extends TestCase
         $this->netteTokenAdapter->unserialize('...');
     }
 
-    /**
-     * @expectedException \Symnedi\Security\Exception\NotImplementedException
-     */
     public function testGetUsername()
     {
-        $this->netteTokenAdapter->getUsername();
+        $this->assertFalse($this->netteTokenAdapter->getUsername());
     }
 
     /**
@@ -111,20 +108,14 @@ final class NetteTokenAdapterTest extends TestCase
         $this->netteTokenAdapter->setAttributes(['someKey' => 'someValue']);
     }
 
-    /**
-     * @expectedException \Symnedi\Security\Exception\NotImplementedException
-     */
     public function testHasAttribute()
     {
-        $this->netteTokenAdapter->hasAttribute('someKey');
+        $this->assertFalse($this->netteTokenAdapter->hasAttribute('someKey'));
     }
 
-    /**
-     * @expectedException \Symnedi\Security\Exception\NotImplementedException
-     */
     public function testGetAttribute()
     {
-        $this->netteTokenAdapter->getAttribute('someKey');
+        $this->assertFalse($this->netteTokenAdapter->getAttribute('someKey'));
     }
 
     /**

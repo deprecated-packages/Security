@@ -69,12 +69,9 @@ final class NetteTokenAdapter implements TokenInterface
         $this->user = $user;
     }
 
-    /**
-     * @return void
-     */
-    public function getUsername()
+    public function getUsername() : bool
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     public function isAuthenticated() : bool
@@ -100,7 +97,7 @@ final class NetteTokenAdapter implements TokenInterface
         /** @var Identity $identity */
         $identity = $this->user->getIdentity();
 
-        return $identity->getData();
+        return (array) $identity->getData();
     }
 
     public function setAttributes(array $attributes)
@@ -119,9 +116,9 @@ final class NetteTokenAdapter implements TokenInterface
     /**
      * @param string $name
      */
-    public function getAttribute($name) : null
+    public function getAttribute($name) : bool
     {
-        return null;
+        return false;
     }
 
     /**
